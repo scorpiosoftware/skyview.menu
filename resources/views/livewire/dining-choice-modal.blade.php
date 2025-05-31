@@ -1,0 +1,85 @@
+<div>
+    {{-- resources/views/livewire/dining-choice-modal.blade.php --}}
+    <!-- Success Message -->
+    {{-- @if (session()->has('message'))
+        <div class="fixed top-4 right-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded z-[9999]">
+            {{ session('message') }}
+        </div>
+    @endif --}}
+
+    <!-- Modal Overlay -->
+    @if ($showModal)
+        <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] p-4">
+            <!-- Modal Content -->
+            <div class="bg-white rounded-xl shadow-2xl max-w-md w-full mx-4 transform transition-all">
+                <!-- Header -->
+                <div class="flex items-center justify-between p-6 border-b border-gray-200">
+                    <h2 class="text-xl font-semibold text-gray-800">
+                        {{ __('entry.title') }}
+                    </h2>
+                    <button wire:click="closeModal" class="text-gray-400 hover:text-gray-600 transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="p-6 space-y-4">
+                    <p class="text-gray-600 text-center mb-6">
+                        {{ __('entry.subtitle') }}
+                    </p>
+
+                    <!-- Dining Options -->
+                    <div class="space-y-3">
+                        <!-- Dine In Option -->
+                        <button wire:click="selectChoice('Dine_In')"
+                            class="w-full flex items-center justify-start space-x-3 p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all group">
+                            <div
+                                class="flex items-center justify-center w-12 h-12 bg-orange-100 rounded-full group-hover:bg-orange-200 transition-colors">
+                                <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div class="text-left">
+                                <h3 class="font-semibold text-gray-800 group-hover:text-blue-600">{{ __('entry.dine_in') }}</h3>
+                                <p class="text-sm text-gray-500">{{ __('entry.dine_in_description') }}</p>
+                            </div>
+                        </button>
+
+                        <!-- Takeaway Option -->
+                        <button wire:click="selectChoice('Takeaway')"
+                            class="w-full flex items-center justify-start space-x-3 p-4 border-2 border-gray-200 rounded-lg hover:border-green-500 hover:bg-green-50 transition-all group">
+                            <div
+                                class="flex items-center justify-center w-12 h-12 bg-green-100 rounded-full group-hover:bg-green-200 transition-colors">
+                                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                                </svg>
+                            </div>
+                            <div class="text-left">
+                                <h3 class="font-semibold text-gray-800 group-hover:text-green-600">{{ __('entry.take_away') }}</h3>
+                                <p class="text-sm text-gray-500">{{ __('entry.take_away_description') }}</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="px-6 py-4 bg-gray-50 rounded-b-xl">
+                    <button wire:click="closeModal"
+                        class="w-full text-gray-500 hover:text-gray-700 transition-colors text-sm">
+                        {{ __('entry.cancel') }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    @endif
+
+
+</div>
