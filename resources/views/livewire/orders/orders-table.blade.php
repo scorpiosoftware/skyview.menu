@@ -31,7 +31,7 @@
         <table class="min-w-full text-sm text-left text-gray-700 border rounded-lg shadow-lg">
             <thead class="text-xs uppercase bg-gray-100 text-gray-600">
                 <tr>
-                    @foreach (['id' =>  __('admin-panel.order_id'), 'name' => __('admin-panel.customer_name'), 'phone' => __('admin-panel.phone'), 'address' => __('admin-panel.address'), 'total' => __('admin-panel.total_amount'),'created_at' => __('admin-panel.date'), 'status' => __('admin-panel.status')] as $field => $label)
+                    @foreach (['id' => __('admin-panel.order_id'), 'name' => __('admin-panel.customer_name'), 'phone' => __('admin-panel.phone'), 'address' => __('admin-panel.address'), 'total' => __('admin-panel.total_amount'), 'created_at' => __('admin-panel.date'), 'status' => __('admin-panel.status')] as $field => $label)
                         <th class="px-4 py-2 whitespace-nowrap cursor-pointer"
                             wire:click="sortBy('{{ $field }}')">
                             {{ $label }}
@@ -89,12 +89,17 @@
                             </div>
                         </td>
 
-                        <td class="px-4 py-2">
+                        <td class="px-4 py-2 flex gap-2">
+                            <button wire:click='showOrderModal({{ $order->id }})'
+                                class="text-blue-600 hover:underline text-sm">
+                                {{ __('admin-panel.view_order') }}
+                            </button>
                             <button wire:click="deleteOrder({{ $order->id }})"
                                 onclick="return confirm('Are you sure you want to delete this order?')"
                                 class="text-red-600 hover:underline text-sm">
                                 {{ __('admin-panel.delete_order') }}
                             </button>
+
                         </td>
                     </tr>
                 @endforeach
@@ -106,4 +111,5 @@
     <div class="mt-4">
         {{ $orders->links() }}
     </div>
+    <livewire:order-details :showModal='false' />
 </div>

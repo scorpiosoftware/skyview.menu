@@ -15,6 +15,8 @@ class OrdersTable extends Component
     // public $orders;
 
 
+    public $showOrderDetails = false;
+    public $selectedOrderId = null;
     public $search = '';
     public $sortField = 'id';
     public $sortDirection = 'asc';
@@ -22,6 +24,12 @@ class OrdersTable extends Component
     public function mount()
     {
         // $this->orders = Order::all();
+    }
+    public function showOrderModal($orderId)
+    {
+        $this->selectedOrderId = $orderId;
+        $this->showOrderDetails = true;
+        $this->dispatch('showOrder',  $orderId);
     }
     public function updatingSearch()
     {
@@ -49,24 +57,19 @@ class OrdersTable extends Component
 
     public function deleteOrder($orderId)
     {
-        // $order = Order::find($orderId);
-        // if ($order) {
-        //     $order->delete();
-        //     $this->orders = Order::all(); // Refresh data
-        // }
         Order::find($orderId)?->delete();
     }
     public function render()
     {
         $orders = Order::query()
-        ->when($this->statusFilter, fn($q) => $q->where('status', $this->statusFilter))
-        ->where(function ($query) {
-            $query->where('name', 'like', '%' . $this->search . '%')
-                  ->orWhere('phone', 'like', '%' . $this->search . '%')
-                  ->orWhere('address', 'like', '%' . $this->search . '%');
-        })
-        ->orderBy('id', 'desc')
-        ->paginate(10);
-        return view('livewire.orders.orders-table',compact('orders'));
+            ->when($this->statusFilter, fn($q) => $q->where('status', $this->statusFilter))
+            ->where(function ($query) {
+                $query->where('name', 'like', '%' . $this->search . '%')
+                    ->orWhere('phone', 'like', '%' . $this->search . '%')
+                    ->orWhere('address', 'like', '%' . $this->search . '%');
+            })
+            ->orderBy('id', 'desc')
+            ->paginate(10);
+        return view('livewire.orders.orders-table', compact('orders'));
     }
 }
