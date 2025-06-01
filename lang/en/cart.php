@@ -13,4 +13,5 @@ return [
     'tax' => 'Tax',
     'total' => 'Total',
     'close' => 'Close',
+    'currency' => 'IQD',
 ];

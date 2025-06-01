@@ -1,0 +1,52 @@
+<?php
+
+return [
+
+    'dashboard' => 'لوحة التحكم',
+    'orders' => 'الطلبات',
+    'products' => 'المنتجات',
+    'categories' => 'الفئات',
+    'users' => 'المستخدمون',
+    'settings' => 'الإعدادات',
+    'reports' => 'التقارير',
+    'sales' => 'المبيعات',
+    'customers' => 'العملاء',
+    'reviews' => 'المراجعات',
+    'coupons' => 'الرموز الترويجية',
+    'shipping' => 'الشحن',
+    'analytics' => 'التحليلات',
+    'notifications' => 'الإشعارات',
+    'support' => 'الدعم الفني',
+    'logs' => ' السجلات',
+    'profile' => 'الملف الشخصي',
+    'logout' => 'تسجيل الخروج',
+    'admin_panel' => 'لوحة الإدارة',
+    'welcome' => 'مرحبًا بك في لوحة الإدارة',
+    'search' => 'بحث',
+    'search_placeholder' => 'ابحث عن طلبات، منتجات، مستخدمين، إلخ.',
+
+
+        // orders section
+    'order_id' => 'رقم الطلب',
+    'order_date' => 'تاريخ الطلب',
+    'order_status' => 'حالة الطلب',
+    'total_amount' => 'المبلغ الإجمالي',
+    'customer_name' => 'اسم العميل',
+    'product_name' => 'اسم المنتج',
+    'quantity' => 'الكمية',
+    'price' => 'السعر',
+    'actions' => 'الإجراءات',
+    'view_order' => 'عرض الطلب',
+    'edit_order' => 'تعديل الطلب',
+    'delete_order' => 'حذف الطلب',
+    'all_statuses' => 'جميع الحالات',
+    'pending' => 'قيد الانتظار',
+    'completed' => 'مكتمل',
+    'cancelled' => 'ملغى',
+
+    'phone' => 'الهاتف',
+    'address' => 'العنوان',
+    'total' => 'الإجمالي',
+    'date' => 'التاريخ',
+    'status' => 'الحالة',
+];

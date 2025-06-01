@@ -128,8 +128,23 @@ class Checkout extends Component
             // Build WhatsApp redirect URL
             $whatsappURL = "https://wa.me/{$whatsappNumber}?text={$encodedMessage}";
             return redirect()->to($whatsappURL)->with('success', 'nice !');
-        } else {
-            // $this->sendOrderNotification($order);
+        } else if (session('site') == 'Dine_In') {
+            $message = "\u{200F}طلب جديد من العميل\n\n"; // RLM character for RTL
+            $message .= "رقم الطاولة : {$order->table}\n";
+            $message .= "🕒 وقت الطلب : {$order->created_at->format('Y-m-d H:i:s')}\n";
+            $message .= "🛒 الطلبات:\n";
+            foreach ($order->order as $item) {
+                $message .= "- {$item['product']['name']} (x{$item['quantity']}) - د.ع" . ($item['product']['price'] * $item['quantity']) . "\n";
+            }
+            $message .= "💰 المجموع : {$order->total} د.ع\n";
+            $message .= "\n";
+            $message .= "شكرًا لاختياركم مطعمنا!";
+            $whatsappNumber = "+96171036488";
+            $encodedMessage = urlencode($message);
+
+            // Build WhatsApp redirect URL
+            $whatsappURL = "https://wa.me/{$whatsappNumber}?text={$encodedMessage}";
+            return redirect()->to($whatsappURL)->with('success', 'nice !');
         }
     }
     public function render()

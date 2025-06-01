@@ -141,7 +141,7 @@
                             <div class="absolute top-3 right-3 max-w-[40%]">
                                 <span
                                     class="inline-block bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium shadow-md truncate">
-                                    IQD {{ number_format($product->price, 2) }}
+                                    {{ __('cart.currency') }} {{ number_format($product->price, 2) }}
                                 </span>
                             </div>
                             <div class="absolute top-3 left-3 max-w-[40%]">

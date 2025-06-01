@@ -46,7 +46,7 @@
                                                 <div>
                                                     <div class="flex justify-between text-base font-medium text-gray-900">
                                                         <h3>{{ $item->product->name }}</h3>
-                                                        <p class="ml-4">${{ number_format($item->product->price * $item->quantity, 2) }}</p>
+                                                        <p class="ml-4">{{ __('cart.currency') }} {{ number_format($item->product->price * $item->quantity, 2) }}</p>
                                                     </div>
                                                     <p class="mt-1 text-sm text-gray-500">{{ $item->product->category->name }}</p>
                                                 </div>
@@ -68,7 +68,7 @@
                             <div class="mt-6 border-t border-gray-200 pt-4">
                                 <div class="flex justify-between text-base font-medium text-gray-900">
                                     <p>{{ __('cart.subtotal') }}</p>
-                                    <p>${{ number_format($total, 2) }}</p>
+                                    <p>{{ __('cart.currency') }} {{ number_format($total, 2) }}</p>
                                 </div>
                                 <p class="mt-0.5 text-sm text-gray-500">{{ __('cart.shipping_and_taxes') }}</p>
                                 <div class="mt-6">
