@@ -70,7 +70,7 @@
                                     <p>{{ __('cart.subtotal') }}</p>
                                     <p>{{ __('cart.currency') }} {{ number_format($total, 2) }}</p>
                                 </div>
-                                <p class="mt-0.5 text-sm text-gray-500">{{ __('cart.shipping_and_taxes') }}</p>
+                                {{-- <p class="mt-0.5 text-sm text-gray-500">{{ __('cart.shipping_and_taxes') }}</p> --}}
                                 <div class="mt-6">
                                     <button wire:click="$dispatch('open-check-out')"  class="w-full rounded-md border border-transparent bg-blue-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-blue-700">
                                         {{ __('cart.checkout') }}
