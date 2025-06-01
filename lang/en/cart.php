@@ -7,7 +7,7 @@ return [
     'shipping_and_taxes' => 'Shipping and taxes calculated at checkout.',
     'continue_shopping' => 'Continue Shopping',
     'remove' => 'Remove',
-    'checkout' => 'Checkout',
+    'checkout' => 'Apply Order',
     'cart_items' => 'Cart Items',
     'subtotal' => 'Subtotal',
     'tax' => 'Tax',

@@ -94,6 +94,11 @@
                 {{ __('admin-panel.orders') }}
             </x-responsive-nav-link>
         </div>
+        <div class="pt-2 pb-3 space-y-1">
+                <x-responsive-nav-link :href="route('table')" :active="request()->routeIs('table')">
+                  {{ __('admin-panel.tables') }}
+            </x-responsive-nav-link>
+        </div>
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
