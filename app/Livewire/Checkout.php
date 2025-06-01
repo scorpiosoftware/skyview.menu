@@ -21,7 +21,7 @@ class Checkout extends Component
     public $payment_method;
     public $note;
     #[On('locale-changed')]
-    public function mount($locale = 'en')
+    public function mount($locale = 'ar')
     {
         App::setLocale($locale);
     }
@@ -88,7 +88,7 @@ class Checkout extends Component
         $total = $cartItems->sum(function ($item) {
             return $item->quantity * $item->product->price;
         });
-   
+
         $order = Order::create([
             'table' => $this->table,
             'address' => $this->address,
@@ -105,6 +105,32 @@ class Checkout extends Component
         Cart::where('session_id', $order->session_id)->delete();
         $this->dispatch('clearCart');
         $this->dispatch('toggleCart');
+
+        if (session('site') == 'Takeaway') {
+            $message = "\u{200F}طلب جديد من العميل\n\n"; // RLM character for RTL
+            $message .= "👤 اسم العميل : {$order->name}\n";
+            $message .= "📞 رقم الهاتف : {$order->phone}\n";
+            $message .= "📍 العنوان : {$order->address}\n";
+            $message .= "📝 ملاحظة : {$order->note}\n";
+            $message .= "🕒 وقت الطلب : {$order->created_at->format('Y-m-d H:i:s')}\n";
+            $message .= "🛒 الطلبات:\n";
+            foreach ($order->order as $item) {
+                $message .= "- {$item['product']['name']} (x{$item['quantity']}) - د.ع" . ($item['product']['price'] * $item['quantity']) . "\n";
+            }
+            $message .= "💰 المجموع : {$order->total} د.ع\n";
+            $message .= "\n";
+            $message .= "للاستفسار أو التعديل على الطلب، يرجى التواصل عبر الواتساب.";
+            $message .= "\n\n";
+            $message .= "شكرًا لاختياركم مطعمنا!";
+            $whatsappNumber = "+96171036488";
+            $encodedMessage = urlencode($message);
+
+            // Build WhatsApp redirect URL
+            $whatsappURL = "https://wa.me/{$whatsappNumber}?text={$encodedMessage}";
+            return redirect()->to($whatsappURL)->with('success', 'nice !');
+        } else {
+            // $this->sendOrderNotification($order);
+        }
     }
     public function render()
     {

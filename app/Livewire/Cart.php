@@ -21,7 +21,7 @@ class Cart extends Component
         $this->showModal = !$this->showModal;
     }
     #[On('locale-changed')]
-    public function mount($locale = 'en')
+    public function mount($locale = 'ar')
     {
         $this->sessionId = session()->getId();
         $this->loadCart();
