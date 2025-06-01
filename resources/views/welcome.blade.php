@@ -62,7 +62,7 @@
         </div>
     </header>
 
-    <main class="w-full lg:max-w-4xl max-w-[335px] mx-auto px-6 mt-8">
+    <main class="w-full lg:max-w-4xl  mx-auto px-6 mt-8">
         @livewire('dining-choice-modal')
 
         @livewire('menu')

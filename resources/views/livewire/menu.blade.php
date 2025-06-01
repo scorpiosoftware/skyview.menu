@@ -28,8 +28,6 @@
                             </button>
                         </div>
                     @endif
-
-                    {{-- <div>{{ App::getLocale() }}</div> --}}
                 </div>
 
                 <div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
@@ -103,7 +101,7 @@
         </div>
 
         <!-- Products Grid -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div class="max-w-7xl sm:w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
             @if ($isAdmin)
                 <div class="mb-4 flex justify-end">
                     <button wire:click="toggleEditing"
