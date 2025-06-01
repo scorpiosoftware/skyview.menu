@@ -7,6 +7,7 @@ return [
     'edit_product' => 'تعديل منتج',
     'delete_product' => 'حذف منتج',
     'name' => 'الاسم',
+    'all' => 'الكل',
     'create_category' => 'إنشاء فئة',
     'cancel' => 'إلغاء',
     'save' => 'حفظ',

@@ -9,6 +9,7 @@ return [
     'name' => 'Name',
     'create_category' => 'Create Category',
     'cancel' => 'Cancel',
+    'all' => 'All',
     'save' => 'Save',
     'edit_category' => 'Edit Category',
     'delete_category' => 'Delete Category',

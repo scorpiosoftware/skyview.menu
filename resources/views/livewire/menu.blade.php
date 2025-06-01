@@ -85,7 +85,7 @@
                         <div class="flex space-x-2 sm:space-x-4 overflow-x-auto custom-scrollbar pb-2">
                             <button wire:click="clearCategory"
                                 class="flex-shrink-0 px-3 sm:px-4 py-2 rounded-full text-sm sm:text-base whitespace-nowrap {{ !$selectedCategory ? 'bg-blue-500 text-white' : 'bg-white text-gray-700' }} hover:bg-blue-600 hover:text-white transition-colors">
-                                All
+                                {{ __('menu.all') }}
                             </button>
                             @foreach ($categories as $category)
                                 <button wire:click="selectCategory({{ $category->id }})"
