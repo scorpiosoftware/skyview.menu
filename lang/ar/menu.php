@@ -25,6 +25,8 @@ return [
     'product_edit' => 'تعديل',
     'product_delete' => 'حذف',
     'product_name' => 'اسم المنتج',
+    'enable_editing' => 'تفعيل التعديل',
+    'disable_editing' => 'تعطيل التعديل',
     'select_category' => 'اختر فئة',
     'product_other_name' => 'اسم المنتج بالاجنبي',
     'category_other_name' => 'اسم الفئة بالاجنبي',

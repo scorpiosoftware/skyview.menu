@@ -10,6 +10,8 @@ return [
     'create_category' => 'Create Category',
     'cancel' => 'Cancel',
     'all' => 'All',
+    'enable_editing' => 'Enable Editing',
+    'disable_editing' => 'Disable Editing',
     'save' => 'Save',
     'edit_category' => 'Edit Category',
     'delete_category' => 'Delete Category',
