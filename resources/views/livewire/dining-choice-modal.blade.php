@@ -38,15 +38,17 @@
                             class="w-full flex items-center justify-start space-x-3 p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all group">
                             <div
                                 class="flex items-center justify-center w-12 h-12 bg-orange-100 rounded-full group-hover:bg-orange-200 transition-colors">
-                                <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor"
+                                {{-- <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
                                     </path>
-                                </svg>
+                                </svg> --}}
+                                <img src="{{ asset('media/images/dine_in.png') }}" class="w-6 h-6" alt="">
                             </div>
                             <div class="text-left">
-                                <h3 class="font-semibold text-gray-800 group-hover:text-blue-600">{{ __('entry.dine_in') }}</h3>
+                                <h3 class="font-semibold text-gray-800 group-hover:text-blue-600">
+                                    {{ __('entry.dine_in') }}</h3>
                                 <p class="text-sm text-gray-500">{{ __('entry.dine_in_description') }}</p>
                             </div>
                         </button>
@@ -56,14 +58,11 @@
                             class="w-full flex items-center justify-start space-x-3 p-4 border-2 border-gray-200 rounded-lg hover:border-green-500 hover:bg-green-50 transition-all group">
                             <div
                                 class="flex items-center justify-center w-12 h-12 bg-green-100 rounded-full group-hover:bg-green-200 transition-colors">
-                                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                                </svg>
+                                <img src="{{ asset('media/images/take_away.png') }}" class="w-6 h-6" alt="">
                             </div>
                             <div class="text-left">
-                                <h3 class="font-semibold text-gray-800 group-hover:text-green-600">{{ __('entry.take_away') }}</h3>
+                                <h3 class="font-semibold text-gray-800 group-hover:text-green-600">
+                                    {{ __('entry.take_away') }}</h3>
                                 <p class="text-sm text-gray-500">{{ __('entry.take_away_description') }}</p>
                             </div>
                         </button>
