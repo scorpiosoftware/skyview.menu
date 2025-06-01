@@ -52,7 +52,7 @@ class Cart extends Component
                 'quantity' => 1
             ]);
         }
-        $this->dispatch('cartUpdated','Cart updated successfully!');
+        $this->dispatch('cartUpdated',__('alert.cart_item_added'));
         $this->loadCart();
     }
 
@@ -60,7 +60,7 @@ class Cart extends Component
     {
         CartModel::where('id', $cartItemId)->delete();
         $this->loadCart();
-                $this->dispatch('cartUpdated','item removed from cart!');
+                $this->dispatch('cartUpdated',__('alert.cart_item_removed'));
     }
 
     public function updateQuantity($cartItemId, $quantity)

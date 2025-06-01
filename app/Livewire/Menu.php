@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 use Livewire\Attributes\On;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
@@ -23,7 +24,7 @@ class Menu extends Component
     public $selectedImage = null;
     public $currentLocale;
     public $search = '';
-    public $selectedCategory = null;
+    public $selectedCategory = 0;
     public $showProductModal = false;
     public $showCategoryModal = false;
     public $isEditing = false;
@@ -43,6 +44,13 @@ class Menu extends Component
     public $categoryName = '';
     public $categoryOtherName = '';
 
+    public function editCategory($id)
+    {
+        $category = Category::find($id);
+        $this->categoryName = $category->name;
+        $this->categoryOtherName = $category->other_name;
+        $this->showCategoryModal = true;
+    }
     public function render()
     {
         $query = Product::query()
@@ -171,11 +179,17 @@ class Menu extends Component
     public function createCategory()
     {
         $this->validate([
-            'categoryName' => 'required|min:3|unique:categories,name',
+            'categoryName' => [
+                'required',
+                'min:3',
+                Rule::unique('categories', 'name')->ignore($this->selectedCategory),
+            ],
             'categoryOtherName' => 'required|min:3',
         ]);
 
-        Category::create([
+        Category::updateOrCreate([
+            'id' => $this->selectedCategory,
+        ], [
             'name' => $this->categoryName,
             'other_name' => $this->categoryOtherName,
             'slug' => Str::slug($this->categoryName),

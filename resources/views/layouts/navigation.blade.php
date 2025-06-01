@@ -21,7 +21,11 @@
                         {{ __('admin-panel.orders') }}
                     </x-nav-link>
                 </div>
-
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('order')" :active="request()->routeIs('order')">
+                        {{ __('admin-panel.tables') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->

@@ -86,7 +86,7 @@
                         // toast: true,
                         position: 'center',
                         icon: 'success',
-                        title: 'Order Placed Successfully',
+                        title: '{{ __('alert.order_placed') }}',
                         timer: window.toastTimer || 1500 ,// Default to 1500ms if not configured  
                         timerProgressBar: true,
                     });

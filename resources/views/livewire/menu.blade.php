@@ -22,6 +22,10 @@
                                 </svg>
                                 <span class="text-sm font-medium">{{ __('menu.add_category') }}</span>
                             </button>
+                            <button wire:click='editCategory({{$selectedCategory}})'
+                                class="inline-flex items-center px-3 py-1.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-200 shadow-md border border-blue-400/20">
+                                <span class="text-sm font-medium">{{ __('menu.edit_category') }}</span>
+                            </button>
                         </div>
                     @endif
 
@@ -86,7 +90,8 @@
                                 All
                             </button>
                             @foreach ($categories as $category)
-                                <button wire:click="selectCategory({{ $category->id }})" wire:key="category-{{ $category->id }}"
+                                <button wire:click="selectCategory({{ $category->id }})"
+                                    wire:key="category-{{ $category->id }}"
                                     class="flex-shrink-0 px-3 sm:px-4 py-2 rounded-full text-sm sm:text-base whitespace-nowrap {{ $selectedCategory == $category->id ? 'bg-blue-500 text-white' : 'bg-white text-gray-700' }} hover:bg-blue-600 hover:text-white transition-colors">
                                     {{ App::getLocale() == 'ar' ? $category->name : $category->other_name }}
                                 </button>
@@ -113,9 +118,10 @@
             @endif
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 sm:gap-6">
                 @foreach ($products as $product)
-                    <div
-                        class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg" wire:key="product-{{ $product->id }}">
-                        <div class="relative overflow-hidden group" wire:click='openImageModal("{{ $product->image }}")'>
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
+                        wire:key="product-{{ $product->id }}">
+                        <div class="relative overflow-hidden group"
+                            wire:click='openImageModal("{{ $product->image }}")'>
                             @if ($isEditing && $isAdmin)
                                 <button wire:click="deleteProduct({{ $product->id }})"
                                     class="absolute bottom-2 right-2 z-20 bg-red-500 text-white p-1.5 rounded-full hover:bg-red-600 transition-colors shadow-lg">
@@ -133,8 +139,7 @@
                                 </button>
                             @endif
                             <img src="{{ $product->image }}" alt="{{ $product->name }}"
-                                class="w-full h-40 sm:h-48 z-50 object-cover transition-transform duration-500 group-hover:scale-110"
-                                >
+                                class="w-full h-40 sm:h-48 z-50 object-cover transition-transform duration-500 group-hover:scale-110">
                             <div
                                 class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300">
                             </div>
@@ -157,7 +162,9 @@
                                 class="text-lg font-bold text-gray-900 mb-2 transition-colors duration-300 group-hover:text-blue-600">
                                 {{ App::getLocale() == 'ar' ? $product->name : $product->other_name }}
                             </h3>
-                            <p class="text-gray-600 text-sm line-clamp-2 h-10 mb-4">{{ App::getLocale() == 'ar' ? $product->description : $product->other_description }}</p>
+                            <p class="text-gray-600 text-sm line-clamp-2 h-10 mb-4">
+                                {{ App::getLocale() == 'ar' ? $product->description : $product->other_description }}
+                            </p>
                             <div class="mt-auto">
                                 <button wire:click="$dispatch('addToCart', { productId: {{ $product->id }} })"
                                     class="w-full bg-blue-500 text-white py-2.5 px-4 rounded-full hover:bg-blue-600 transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-md active:translate-y-0 font-medium">
@@ -188,14 +195,15 @@
         </div>
     </div>
 
-    @if($showImageModal)
+    @if ($showImageModal)
         <div class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog"
             aria-modal="true">
             <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                 <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
                 <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
                 <div class="absolute right-0 top-0 pr-4 pt-4">
-                    <button wire:click="closeImageModal" class="rounded-md bg-white text-gray-400 hover:text-gray-500">
+                    <button wire:click="closeImageModal"
+                        class="rounded-md bg-white text-gray-400 hover:text-gray-500">
                         <span class="sr-only">Close</span>
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor">
@@ -208,7 +216,8 @@
                     <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                         <div class="mb-4">
                             <h3 class="text-lg font-medium text-gray-900">{{ __('menu.product_image') }}</h3>
-                            <img src="{{ $selectedImage }}" alt="{{ __('menu.product_image') }}" class="w-full h-full  object-cover transition-transform duration-500 group-hover:scale-110">
+                            <img src="{{ $selectedImage }}" alt="{{ __('menu.product_image') }}"
+                                class="w-full h-full  object-cover transition-transform duration-500 group-hover:scale-110">
                         </div>
                     </div>
                 </div>
@@ -248,14 +257,14 @@
                                         <span class="text-red-500 text-sm">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                    <div>
-                                        <label for="productDescription"
-                                            class="block text-sm font-medium text-gray-700">{{ __('menu.product_description') }}</label>
-                                        <textarea wire:model="productDescription" id="productDescription" rows="3"
-                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
-                                        @error('productDescription')
-                                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                                        @enderror
+                                <div>
+                                    <label for="productDescription"
+                                        class="block text-sm font-medium text-gray-700">{{ __('menu.product_description') }}</label>
+                                    <textarea wire:model="productDescription" id="productDescription" rows="3"
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
+                                    @error('productDescription')
+                                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div>
                                     <label for="productOtherDescription"
@@ -287,7 +296,8 @@
                                     @enderror
                                 </div>
                                 <div>
-                                    <label for="productImage" class="block text-sm font-medium text-gray-700">{{ __('menu.product_image') }}</label>
+                                    <label for="productImage"
+                                        class="block text-sm font-medium text-gray-700">{{ __('menu.product_image') }}</label>
                                     <div class="mt-1 flex items-center space-x-4">
                                         <div class="flex-1">
                                             <input type="file" wire:model="productImage" id="productImage"
@@ -343,7 +353,8 @@
                                 <h3 class="text-lg font-medium text-gray-900">{{ __('menu.add_category') }}</h3>
                             </div>
                             <div>
-                                <label for="categoryName" class="block text-sm font-medium text-gray-700">{{ __('menu.category_name') }}</label>
+                                <label for="categoryName"
+                                    class="block text-sm font-medium text-gray-700">{{ __('menu.category_name') }}</label>
                                 <input type="text" wire:model="categoryName" id="categoryName"
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                                 @error('categoryName')
@@ -360,7 +371,7 @@
                         <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                             <button type="submit"
                                 class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
-                                {{ __('menu.create_category') }}
+                                {{ __('menu.save') }}
                             </button>
                             <button type="button" wire:click="closeCategoryModal"
                                 class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
