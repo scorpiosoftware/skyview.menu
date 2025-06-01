@@ -18,6 +18,9 @@ Route::middleware(['auth', 'verified'])->prefix('dashboard')->group(function () 
     Route::get('/orders', function () {
         return view('dashboard.orders.index');
     })->name('order');
+        Route::get('/tables', function () {
+        return view('dashboard.tables.index');
+    })->name('table');
 });
 
 Route::middleware('auth')->group(function () {

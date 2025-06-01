@@ -26,7 +26,7 @@ return [
     'search_placeholder' => 'ابحث عن طلبات، منتجات، مستخدمين، إلخ.',
 
 
-        // orders section
+    // orders section
     'order_id' => 'رقم الطلب',
     'order_date' => 'تاريخ الطلب',
     'order_status' => 'حالة الطلب',
@@ -49,4 +49,8 @@ return [
     'total' => 'الإجمالي',
     'date' => 'التاريخ',
     'status' => 'الحالة',
+    'tables' => 'الطاولات',
+    'table_number' => 'رقم الطاولة',
+    'table_saved' => 'تم حفظ الطاولة بنجاح',
+    'table_deleted' => 'تم حذف الطاولة بنجاح',
 ];

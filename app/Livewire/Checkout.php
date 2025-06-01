@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\Table;
 use Illuminate\Support\Facades\App;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -24,6 +25,7 @@ class Checkout extends Component
     public function mount($locale = 'ar')
     {
         App::setLocale($locale);
+        $this->table = Table::first()->table_number ?? '';
     }
     public function updatedAddress()
     {
@@ -121,8 +123,8 @@ class Checkout extends Component
             $message .= "\n";
             $message .= "للاستفسار أو التعديل على الطلب، يرجى التواصل عبر الواتساب.";
             $message .= "\n\n";
-            $message .= "شكرًا لاختياركم مطعمنا!";
-            $whatsappNumber = "+96171036488";
+            $message .= "شكرًا لاختياركم مطعمنا! سكاي فيو";
+            $whatsappNumber = "9647749600060";
             $encodedMessage = urlencode($message);
 
             // Build WhatsApp redirect URL
@@ -138,8 +140,8 @@ class Checkout extends Component
             }
             $message .= "💰 المجموع : {$order->total} د.ع\n";
             $message .= "\n";
-            $message .= "شكرًا لاختياركم مطعمنا!";
-            $whatsappNumber = "+96171036488";
+            $message .= "شكرًا لاختياركم مطعمنا! سكاي فيو";
+            $whatsappNumber = "9647749600060";
             $encodedMessage = urlencode($message);
 
             // Build WhatsApp redirect URL
@@ -149,6 +151,7 @@ class Checkout extends Component
     }
     public function render()
     {
-        return view('livewire.checkout');
+        $tables = \App\Models\Table::all();
+        return view('livewire.checkout', compact('tables'));
     }
 }

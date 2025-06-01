@@ -47,5 +47,10 @@ return [
     'total' => 'Total',
     'date' => 'Date',
     'status' => 'Status',
+    'tables' => 'Tables',
+    'table_number' => 'Table Number',
+    'table_saved' => 'Table saved successfully',
+    'table_deleted' => 'Table deleted successfully',
     
+
 ];

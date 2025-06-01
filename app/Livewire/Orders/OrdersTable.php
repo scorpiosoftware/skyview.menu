@@ -21,7 +21,7 @@ class OrdersTable extends Component
     public $statusFilter = '';
     public function mount()
     {
-        $this->orders = Order::all();
+        // $this->orders = Order::all();
     }
     public function updatingSearch()
     {

@@ -117,8 +117,9 @@
                                     <select id="table" name="table" wire:model="table"
                                         class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                                         <option value="" disabled selected>{{ __('checkout.select_table') }}</option>
-                                        <option value="1">Table 1</option>
-                                        <option value="2">Table 2</option>
+                                        @foreach ($tables as $table)
+                                            <option value="{{ $table->table_number }}">{{ $table->table_number }}</option>
+                                        @endforeach
                                     </select>
                                     @error('table')
                                         <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span>
