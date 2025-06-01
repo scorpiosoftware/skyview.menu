@@ -1,6 +1,6 @@
 <div>
-    <div x-data="{ 
-        show: @entangle('showModal'), 
+    <div x-data="{
+        show: @entangle('showModal'),
         mapInitialized: false,
         map: null,
         marker: null,
@@ -10,32 +10,32 @@
                 console.log('Map already initialized, skipping...');
                 return;
             }
-
+    
             const mapElement = document.getElementById('map');
             if (mapElement && typeof L !== 'undefined') {
                 const lat = {{ $lat ?? 33.8938 }};
                 const lng = {{ $lng ?? 35.5018 }};
-                
+    
                 // Initialize map
                 this.map = L.map('map').setView([lat, lng], 13);
-                
+    
                 // Add tile layer
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '© OpenStreetMap contributors'
                 }).addTo(this.map);
-                
+    
                 // Add draggable marker
                 this.marker = L.marker([lat, lng], {
                     draggable: true
                 }).addTo(this.map);
-                
+    
                 // Handle marker drag
                 this.marker.on('dragend', (e) => {
                     const { lat, lng } = e.target.getLatLng();
                     @this.set('lat', lat);
                     @this.set('lng', lng);
                 });
-                
+    
                 // Handle map click
                 this.map.on('click', (e) => {
                     const { lat, lng } = e.latlng;
@@ -43,7 +43,7 @@
                     @this.set('lat', lat);
                     @this.set('lng', lng);
                 });
-                
+    
                 console.log('Map initialized successfully');
             } else {
                 console.error('Map element not found or Leaflet not loaded');
@@ -67,24 +67,23 @@
                 console.log('Map reset');
             }
         }
-    }" 
-    x-on:location-updated.window="updateMapLocation($event.detail.lat, $event.detail.lng)"
-    @location-updated.window="updateMapLocation($event.detail.lat, $event.detail.lng)" x-show="show" x-init="$watch('show', value => {
-        if (value && !mapInitialized) {
-            setTimeout(() => {
-                initMap();
-                mapInitialized = true;
-                // Store references globally for Livewire events
-                window.mapInstance = map;
-                window.markerInstance = marker;
-            }, 300); // wait for transition to finish
-          
-        }
-    })" x-transition:enter="ease-out duration-300"
-        x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
-        x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100 scale-100"
-        x-transition:leave-end="opacity-0 scale-95" x-cloak class="fixed inset-0 z-50 overflow-y-auto"
-        aria-labelledby="cart-modal" role="dialog" aria-modal="true">
+    }" x-on:location-updated.window="updateMapLocation($event.detail.lat, $event.detail.lng)"
+        @location-updated.window="updateMapLocation($event.detail.lat, $event.detail.lng)" x-show="show"
+        x-init="$watch('show', value => {
+            if (value && !mapInitialized) {
+                setTimeout(() => {
+                    initMap();
+                    mapInitialized = true;
+                    // Store references globally for Livewire events
+                    window.mapInstance = map;
+                    window.markerInstance = marker;
+                }, 300); // wait for transition to finish
+        
+            }
+        })" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0 scale-95"
+        x-transition:enter-end="opacity-100 scale-100" x-transition:leave="ease-in duration-200"
+        x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" x-cloak
+        class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="cart-modal" role="dialog" aria-modal="true">
         <!-- Background overlay -->
         <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
         <div class="flex md:min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
@@ -116,9 +115,11 @@
                                     </label>
                                     <select id="table" name="table" wire:model="table"
                                         class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                        <option value="" disabled selected>{{ __('checkout.select_table') }}</option>
+                                        <option value="" disabled selected>{{ __('checkout.select_table') }}
+                                        </option>
                                         @foreach ($tables as $table)
-                                            <option value="{{ $table->table_number }}">{{ $table->table_number }}</option>
+                                            <option value="{{ $table->table_number }}">{{ $table->table_number }}
+                                            </option>
                                         @endforeach
                                     </select>
                                     @error('table')
@@ -161,8 +162,10 @@
                                     <label for="address" class="block text-sm font-medium text-gray-700 mb-2">
                                         {{ __('checkout.address') }}
                                     </label>
-                                    <input id="address" type="text" name="address" wire:model="address"
-                                        class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                                    {{-- <input id="address" type="text" name="address" wire:model="address"
+                                        class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" /> --}}
+                                    <textarea wire:model="address" id="address" rows="3"
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
                                     @error('address')
                                         <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span>
                                     @enderror
