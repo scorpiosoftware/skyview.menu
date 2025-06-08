@@ -18,9 +18,12 @@ Route::middleware(['auth', 'verified'])->prefix('dashboard')->group(function () 
     Route::get('/orders', function () {
         return view('dashboard.orders.index');
     })->name('order');
-        Route::get('/tables', function () {
+    Route::get('/tables', function () {
         return view('dashboard.tables.index');
     })->name('table');
+    Route::get('/offers', function () {
+        return view('dashboard.offers.index');
+    })->name('offer');
 });
 
 Route::middleware('auth')->group(function () {
@@ -34,4 +37,4 @@ Route::middleware('auth')->group(function () {
 //     Route::get('/categories', App\Livewire\Admin\CategoryManager::class)->name('admin.categories');
 // });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

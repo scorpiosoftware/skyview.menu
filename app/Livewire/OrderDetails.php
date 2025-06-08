@@ -14,7 +14,7 @@ class OrderDetails extends Component
     public function mount()
     {
         // Initialize any properties if needed
-        $this->cartItems = Order::first()->order; // Fetch all orders or set to an empty array
+        $this->cartItems = Order::first()?->order ?? []; // Fetch all orders or set to an empty array
     }
     #[On('showOrder')]
     public function showOrderDetails($orderId)

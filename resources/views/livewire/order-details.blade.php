@@ -46,7 +46,7 @@
                                                 <div>
                                                     <div class="flex justify-between text-base font-medium text-gray-900">
                                                         <h3>{{ $item['product']['name'] }}</h3>
-                                                        <p class="ml-4">{{ __('cart.currency') }} {{ number_format($item['product']['price'] * $item['quantity'], 2) }}</p>
+                                                        <p class="ml-4">{{ __('cart.currency') }} {{ number_format(\App\Models\Product::find($item['product']['id'])->getDiscountedPriceAttribute() * $item['quantity'], 2) }}</p>
                                                     </div>
                                                     {{-- <p class="mt-1 text-sm text-gray-500">{{ $item['product']['category']['name'] }}</p> --}}
                                                 </div>

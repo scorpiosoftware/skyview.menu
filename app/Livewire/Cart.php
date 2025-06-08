@@ -76,7 +76,7 @@ class Cart extends Component
     private function calculateTotal()
     {
         $this->total = $this->cartItems->sum(function ($item) {
-            return $item->quantity * $item->product->price;
+            return $item->quantity * $item->product->getDiscountedPriceAttribute();
         });
     }
 

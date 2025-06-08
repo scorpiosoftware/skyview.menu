@@ -38,12 +38,6 @@
                             class="w-full flex items-center justify-start space-x-3 p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all group">
                             <div
                                 class="flex items-center justify-center w-12 h-12 bg-orange-100 rounded-full group-hover:bg-orange-200 transition-colors">
-                                {{-- <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
-                                    </path>
-                                </svg> --}}
                                 <img src="{{ asset('media/images/dine_in.png') }}" class="w-6 h-6" alt="">
                             </div>
                             <div class="text-left">
@@ -66,6 +60,33 @@
                                 <p class="text-sm text-gray-500">{{ __('entry.take_away_description') }}</p>
                             </div>
                         </button>
+                        <br>
+                        <p class="text-gray-600 text-center mb-6">{{ __('offer.available_offers') }}</p>
+
+                        @foreach ($offers as $offer)
+                            <button wire:click="selectOffer({{ $offer->id }})" 
+                                class="w-full flex items-center justify-start space-x-3 p-4 border-2 border-gray-200 rounded-lg hover:border-green-500 hover:bg-green-50 transition-all group">
+                                <div
+                                    class="flex items-center justify-center  bg-green-100 rounded-full group-hover:bg-green-200 transition-colors">
+                                    <img src="{{ asset($offer->image) }}" class="box-border size-16" alt="">
+                                </div>
+                                <div class="text-left">
+                                    <h3 class="font-semibold text-nowrap text-gray-800 group-hover:text-green-600">
+                                        {{ $offer->name }}</h3>
+                                    {{-- <p class="text-sm text-gray-500">{{ __('offer.startDate') }} :
+                                        {{ $offer->start_date->format('Y-m-d') }}</p>
+                                    <p class="text-sm text-gray-500">{{ __('offer.endDate') }} :
+                                        {{ $offer->end_date->format('Y-m-d') }}
+                                    </p> --}}
+
+                                    <p>حسم % {{ intval($offer->sale_percentage) }} </p>
+
+                                </div>
+                                <div class="flex justify-end items-center w-1/2" wire:ignore><livewire:countdown-timer :target-date="$offer->end_date->format('Y-m-d')" /></div>
+                            </button>
+                        @endforeach
+
+
                     </div>
                 </div>
 

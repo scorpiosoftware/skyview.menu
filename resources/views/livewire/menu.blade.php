@@ -22,7 +22,7 @@
                                 </svg>
                                 <span class="text-sm font-medium">{{ __('menu.add_category') }}</span>
                             </button>
-                            <button wire:click='editCategory({{$selectedCategory}})'
+                            <button wire:click='editCategory({{ $selectedCategory }})'
                                 class="inline-flex items-center px-3 py-1.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-200 shadow-md border border-blue-400/20">
                                 <span class="text-sm font-medium">{{ __('menu.edit_category') }}</span>
                             </button>
@@ -95,6 +95,34 @@
                                 </button>
                             @endforeach
                         </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- Categories -->
+            <div class="bg-gray-100 border-t border-gray-200">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+                    <div class="relative">
+                        <div
+                            class="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-gray-100 to-transparent z-10 pointer-events-none">
+                        </div>
+                        <div
+                            class="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-gray-100 to-transparent z-10 pointer-events-none">
+                        </div>
+                        <div class="flex space-x-2 sm:space-x-4 overflow-x-auto custom-scrollbar pb-2">
+                            <button wire:click="clearOffer"
+                                class="flex-shrink-0 px-3 sm:px-4 py-2 rounded-full text-sm sm:text-base whitespace-nowrap {{ !$selectedOffer ? 'bg-blue-500 text-white' : 'bg-white text-gray-700' }} hover:bg-blue-600 hover:text-white transition-colors">
+                                {{ __('menu.all') }}
+                            </button>
+                            @foreach ($offers as $offer)
+                                <button wire:click="selectOffer({{ $offer->id }})"
+                                    wire:key="offer-{{ $offer->id }}"
+                                    class="flex-shrink-0 px-3 sm:px-4 py-2 rounded-full text-sm sm:text-base whitespace-nowrap {{ $selectedCategory == $offer->id ? 'bg-blue-500 text-white' : 'bg-white text-gray-700' }} hover:bg-blue-600 hover:text-white transition-colors">
+                                    {{ $offer->name }}
+                                </button>
+                            @endforeach
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -110,7 +138,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                         </svg>
-                        <span class="text-sm font-medium">{{ $isEditing ? __('menu.disable_editing') : __('menu.enable_editing') }}</span>
+                        <span
+                            class="text-sm font-medium">{{ $isEditing ? __('menu.disable_editing') : __('menu.enable_editing') }}</span>
                     </button>
                 </div>
             @endif
@@ -144,7 +173,8 @@
                             <div class="absolute top-3 right-3 max-w-[40%]">
                                 <span
                                     class="inline-block bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium shadow-md truncate">
-                                    {{ __('cart.currency') }} {{ number_format($product->price, 2) }}
+                                    {{ __('cart.currency') }}
+                                    {{ number_format($product->getDiscountedPriceAttribute(), 2) }}
                                 </span>
                             </div>
                             <div class="absolute top-3 left-3 max-w-[40%]">
@@ -155,6 +185,21 @@
                                 </span>
                             </div>
                         </div>
+                        <div class="flex justify-start items-center gap-3 px-4 py-2">
+                            <button
+                                class="w-10 h-10 rounded-full border border-gray-300 bg-white hover:bg-red-500 hover:text-white text-sm font-semibold transition duration-200 shadow-sm">
+                                SM
+                            </button>
+                            <button
+                                class="w-10 h-10 rounded-full border border-gray-300 bg-white hover:bg-red-500 hover:text-white text-sm font-semibold transition duration-200 shadow-sm">
+                                M
+                            </button>
+                            <button
+                                class="w-10 h-10 rounded-full border border-gray-300 bg-white hover:bg-red-500 hover:text-white text-sm font-semibold transition duration-200 shadow-sm">
+                                L
+                            </button>
+                        </div>
+
                         <div class="p-4 flex flex-col flex-grow">
                             <h3
                                 class="text-lg font-bold text-gray-900 mb-2 transition-colors duration-300 group-hover:text-blue-600">

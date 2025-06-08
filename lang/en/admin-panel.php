@@ -51,6 +51,17 @@ return [
     'table_number' => 'Table Number',
     'table_saved' => 'Table saved successfully',
     'table_deleted' => 'Table deleted successfully',
-    
 
+    'offers' => 'Offers',
+    'offer_image' => 'Image',
+    'active' => 'active',
+    'inactive' => 'inactive',
+    'offer_id' => 'id',
+    'offer_name' => 'name',
+    'discount' => 'discount',
+    'startDate' => 'start date',
+    'endDate' => 'end date',
+    'edit' => 'edit',
+    'delete' => 'delete',
+     
 ];

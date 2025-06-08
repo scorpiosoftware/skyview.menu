@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\Table;
 use Illuminate\Support\Facades\App;
 use Livewire\Attributes\On;
@@ -88,7 +89,7 @@ class Checkout extends Component
             ->where('session_id', session()->getId())
             ->get();
         $total = $cartItems->sum(function ($item) {
-            return $item->quantity * $item->product->price;
+            return $item->quantity * $item->product->getDiscountedPriceAttribute();
         });
 
         $order = Order::create([
@@ -117,7 +118,8 @@ class Checkout extends Component
             $message .= "🕒 وقت الطلب : {$order->created_at->format('Y-m-d H:i:s')}\n";
             $message .= "🛒 الطلبات:\n";
             foreach ($order->order as $item) {
-                $message .= "- {$item['product']['name']} (x{$item['quantity']}) - د.ع" . ($item['product']['price'] * $item['quantity']) . "\n";
+                $product = Product::find($item['product']['id']);
+                $message .= "- {$item['product']['name']} (x{$item['quantity']}) - د.ع" . ($product->getDiscountedPriceAttribute() * $item['quantity']) . "\n";
             }
             $message .= "💰 المجموع : {$order->total} د.ع\n";
             $message .= "\n";

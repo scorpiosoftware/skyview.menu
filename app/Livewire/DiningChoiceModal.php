@@ -2,13 +2,19 @@
 
 namespace App\Livewire;
 
+use App\Models\Offer;
 use Livewire\Component;
 
 class DiningChoiceModal extends Component
 {
     public $showModal = true;
     public $selectedChoice = null;
-
+    public $selectedOffer = null;
+    public $offers;
+    public function mount()
+    {
+        $this->offers = Offer::current()->get();
+    }
     public function openModal()
     {
         $this->showModal = true;
@@ -39,6 +45,23 @@ class DiningChoiceModal extends Component
         // Optional: Show success message
         session()->flash('message', "You selected: {$choice}");
         session()->put('site', $choice);
+    }
+    public function selectOffer($id)
+    {
+        if (session()->has('offer')) {
+            session()->forget('offer');
+        }
+        $this->selectedOffer = $id;
+
+        // Emit event to parent component or handle logic here
+        $this->dispatch('offerSelected', $id);
+
+        // Close modal after selection
+        // $this->showModal = false;
+
+        // Optional: Show success message
+        session()->flash('message', "You selected: {$id}");
+        session()->put('offer', $id);
     }
     public function render()
     {

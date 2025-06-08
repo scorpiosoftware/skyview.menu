@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Category;
+use App\Models\Offer;
 use App\Models\Product;
 use Illuminate\Support\Facades\App;
 use Livewire\WithPagination;
@@ -25,6 +26,7 @@ class Menu extends Component
     public $currentLocale;
     public $search = '';
     public $selectedCategory = 0;
+    public $selectedOffer = 0;
     public $showProductModal = false;
     public $showCategoryModal = false;
     public $isEditing = false;
@@ -44,8 +46,18 @@ class Menu extends Component
     public $categoryName = '';
     public $categoryOtherName = '';
 
-    public function editCategory($id)
+    #[On('offerSelected')]
+
+    public function getOffer($id)
     {
+
+        $this->selectedOffer = $id;
+    }
+
+    public function editCategory($id = 0)
+    {
+        if ($id <= 0)
+            return;
         $category = Category::find($id);
         $this->categoryName = $category->name;
         $this->categoryOtherName = $category->other_name;
@@ -60,11 +72,16 @@ class Menu extends Component
             })
             ->when($this->selectedCategory, function ($query) {
                 $query->where('category_id', $this->selectedCategory);
+            })->when($this->selectedOffer && $this->selectedOffer != 0, function ($query) {
+                $query->whereHas('offers', function ($query) {
+                    $query->where('offers.id', $this->selectedOffer);
+                });
             });
 
         return view('livewire.menu', [
             'products' => $query->paginate($this->perPage),
             'categories' => Category::all(),
+            'offers' => Offer::current()->get(),
             'isAdmin' => Auth::check() && Auth::user()->isAdmin(),
         ]);
     }
@@ -75,6 +92,16 @@ class Menu extends Component
         $this->resetPage();
     }
 
+    public function selectOffer($offerId)
+    {
+        $this->selectedOffer = $offerId;
+        $this->resetPage();
+    }
+    public function clearOffer()
+    {
+        $this->selectedOffer = null;
+        $this->resetPage();
+    }
     public function clearCategory()
     {
         $this->selectedCategory = null;

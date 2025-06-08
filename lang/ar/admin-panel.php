@@ -53,4 +53,16 @@ return [
     'table_number' => 'رقم الطاولة',
     'table_saved' => 'تم حفظ الطاولة بنجاح',
     'table_deleted' => 'تم حذف الطاولة بنجاح',
+
+    'offers' => 'العروضات',
+    'offer_id' => 'رقم العرض',
+    'offer_image' => 'الصورة',
+    'active' => 'مفعل',
+    'inactive' => 'غير مفعل',
+    'offer_name' => 'الاسم',
+    'discount' => 'الحسم',
+    'startDate' => 'تاريخ البدء',
+    'endDate' => 'تاريخ الانتهاء',
+    'edit' => 'تعديل',
+    'delete' => 'حذف',
 ];
