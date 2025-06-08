@@ -118,7 +118,7 @@
                                 @foreach ($offers as $offer)
                                     <button wire:click="selectOffer({{ $offer->id }})"
                                         wire:key="offer-{{ $offer->id }}"
-                                        class="flex-shrink-0 px-3 sm:px-4 py-2 rounded-full text-sm sm:text-base whitespace-nowrap {{ $selectedCategory == $offer->id ? 'bg-blue-500 text-white' : 'bg-white text-gray-700' }} hover:bg-blue-600 hover:text-white transition-colors">
+                                        class="flex-shrink-0 px-3 sm:px-4 py-2 rounded-full text-sm sm:text-base whitespace-nowrap {{ $selectedOffer == $offer->id ? 'bg-blue-500 text-white' : 'bg-white text-gray-700' }} hover:bg-blue-600 hover:text-white transition-colors">
                                         {{ $offer->name }}
                                     </button>
                                 @endforeach
