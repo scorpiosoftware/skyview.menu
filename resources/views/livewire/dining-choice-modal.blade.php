@@ -61,10 +61,13 @@
                             </div>
                         </button>
                         <br>
-                        <p class="text-gray-600 text-center mb-6">{{ __('offer.available_offers') }}</p>
+                        @if (count($offers) > 0)
+                            <p class="text-gray-600 text-center mb-6">{{ __('offer.available_offers') }}</p>
+                        @endif
+
 
                         @foreach ($offers as $offer)
-                            <button wire:click="selectOffer({{ $offer->id }})" 
+                            <button wire:click="selectOffer({{ $offer->id }})"
                                 class="w-full flex items-center justify-start space-x-3 p-4 border-2 border-gray-200 rounded-lg hover:border-green-500 hover:bg-green-50 transition-all group">
                                 <div
                                     class="flex items-center justify-center  bg-green-100 rounded-full group-hover:bg-green-200 transition-colors">
@@ -82,7 +85,8 @@
                                     <p>حسم % {{ intval($offer->sale_percentage) }} </p>
 
                                 </div>
-                                <div class="flex justify-end items-center w-1/2" wire:ignore><livewire:countdown-timer :target-date="$offer->end_date->format('Y-m-d')" /></div>
+                                <div class="flex justify-end items-center w-1/2" wire:ignore><livewire:countdown-timer
+                                        :target-date="$offer->end_date->format('Y-m-d')" /></div>
                             </button>
                         @endforeach
 

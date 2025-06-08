@@ -99,33 +99,36 @@
                     </div>
                 </div>
             </div>
-            <!-- Categories -->
-            <div class="bg-gray-100 border-t border-gray-200">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-                    <div class="relative">
-                        <div
-                            class="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-gray-100 to-transparent z-10 pointer-events-none">
-                        </div>
-                        <div
-                            class="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-gray-100 to-transparent z-10 pointer-events-none">
-                        </div>
-                        <div class="flex space-x-2 sm:space-x-4 overflow-x-auto custom-scrollbar pb-2">
-                            <button wire:click="clearOffer"
-                                class="flex-shrink-0 px-3 sm:px-4 py-2 rounded-full text-sm sm:text-base whitespace-nowrap {{ !$selectedOffer ? 'bg-blue-500 text-white' : 'bg-white text-gray-700' }} hover:bg-blue-600 hover:text-white transition-colors">
-                                {{ __('menu.all') }}
-                            </button>
-                            @foreach ($offers as $offer)
-                                <button wire:click="selectOffer({{ $offer->id }})"
-                                    wire:key="offer-{{ $offer->id }}"
-                                    class="flex-shrink-0 px-3 sm:px-4 py-2 rounded-full text-sm sm:text-base whitespace-nowrap {{ $selectedCategory == $offer->id ? 'bg-blue-500 text-white' : 'bg-white text-gray-700' }} hover:bg-blue-600 hover:text-white transition-colors">
-                                    {{ $offer->name }}
+            <!-- offers -->
+            @if (count($offers) > 0)
+                <div class="bg-gray-100 border-t border-gray-200">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+                        <div class="relative">
+                            <div
+                                class="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-gray-100 to-transparent z-10 pointer-events-none">
+                            </div>
+                            <div
+                                class="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-gray-100 to-transparent z-10 pointer-events-none">
+                            </div>
+                            <div class="flex space-x-2 sm:space-x-4 overflow-x-auto custom-scrollbar pb-2">
+                                <button wire:click="clearOffer"
+                                    class="flex-shrink-0 px-3 sm:px-4 py-2 rounded-full text-sm sm:text-base whitespace-nowrap {{ !$selectedOffer ? 'bg-blue-500 text-white' : 'bg-white text-gray-700' }} hover:bg-blue-600 hover:text-white transition-colors">
+                                    {{ __('menu.all') }}
                                 </button>
-                            @endforeach
-                        </div>
+                                @foreach ($offers as $offer)
+                                    <button wire:click="selectOffer({{ $offer->id }})"
+                                        wire:key="offer-{{ $offer->id }}"
+                                        class="flex-shrink-0 px-3 sm:px-4 py-2 rounded-full text-sm sm:text-base whitespace-nowrap {{ $selectedCategory == $offer->id ? 'bg-blue-500 text-white' : 'bg-white text-gray-700' }} hover:bg-blue-600 hover:text-white transition-colors">
+                                        {{ $offer->name }}
+                                    </button>
+                                @endforeach
+                            </div>
 
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endif
+
         </div>
 
         <!-- Products Grid -->
