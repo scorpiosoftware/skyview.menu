@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Offer;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class DiningChoiceModal extends Component
@@ -15,6 +16,8 @@ class DiningChoiceModal extends Component
     {
         $this->offers = Offer::current()->get();
     }
+
+    #[On('open-choice')]
     public function openModal()
     {
         $this->showModal = true;
@@ -38,7 +41,6 @@ class DiningChoiceModal extends Component
 
         // Emit event to parent component or handle logic here
         $this->dispatch('diningChoiceSelected', $choice);
-
         // Close modal after selection
         $this->showModal = false;
 

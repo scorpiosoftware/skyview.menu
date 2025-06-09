@@ -177,7 +177,7 @@
                                 <span
                                     class="inline-block bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium shadow-md truncate">
                                     {{ __('cart.currency') }}
-                                    {{ number_format($product->getDiscountedPriceAttribute(), 2) }}
+                                    {{ number_format($product->getDiscountedPriceAttribute(), 0) }}
                                 </span>
                             </div>
                             <div class="absolute top-3 left-3 max-w-[40%]">
@@ -222,11 +222,11 @@
                 @endforeach
             </div>
 
-            @if ($products->count() > $perPage)
+            {{-- @if ($products->count() > $perPage) --}}
                 <div class="mt-6 !bg-white rounded-lg p-4">
                     {{ $products->links() }}
                 </div>
-            @endif
+            {{-- @endif --}}
         </div>
 
         <!-- Cart Button -->
@@ -324,7 +324,7 @@
                                 <div>
                                     <label for="productPrice"
                                         class="block text-sm font-medium text-gray-700">{{ __('menu.product_price') }}</label>
-                                    <input type="number" step="0.01" wire:model="productPrice" id="productPrice"
+                                    <input type="number" wire:model="productPrice" id="productPrice"
                                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                                     @error('productPrice')
                                         <span class="text-red-500 text-sm">{{ $message }}</span>

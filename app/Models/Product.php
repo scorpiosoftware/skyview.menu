@@ -76,7 +76,7 @@ class Product extends Model
      */
     public function getDiscountedPriceAttribute()
     {
-        $discount = $this->best_discount;
-        return $this->price - ($this->price * $discount / 100);
+        $discount =  $this->best_discount;
+        return intval($this->price - ($this->price * $discount / 100));
     }
 }

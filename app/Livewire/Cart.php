@@ -19,6 +19,9 @@ class Cart extends Component
     public function toggleCart()
     {
         $this->showModal = !$this->showModal;
+        if (session('site') == '') {
+            $this->dispatch('open-choice');
+        }
     }
     #[On('locale-changed')]
     public function mount($locale = 'ar')
@@ -52,7 +55,7 @@ class Cart extends Component
                 'quantity' => 1
             ]);
         }
-        $this->dispatch('cartUpdated',__('alert.cart_item_added'));
+        $this->dispatch('cartUpdated', __('alert.cart_item_added'));
         $this->loadCart();
     }
 
@@ -60,7 +63,7 @@ class Cart extends Component
     {
         CartModel::where('id', $cartItemId)->delete();
         $this->loadCart();
-                $this->dispatch('cartUpdated',__('alert.cart_item_removed'));
+        $this->dispatch('cartUpdated', __('alert.cart_item_removed'));
     }
 
     public function updateQuantity($cartItemId, $quantity)
