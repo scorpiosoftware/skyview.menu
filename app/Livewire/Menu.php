@@ -121,6 +121,7 @@ class Menu extends Component
 
     public function openCategoryModal()
     {
+        $this->selectedCategory = null;
         $this->showCategoryModal = true;
     }
 
