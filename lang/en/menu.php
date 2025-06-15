@@ -27,5 +27,7 @@ return [
     'product_category' => 'Product Category',
     'product_other_name' => 'Product English Name',
     'category_other_name' => 'Category English Name',
-
+    'product_created' => 'Product Saved Successfully',
+    'size' => 'size',
+    'append' => 'append',
 ];

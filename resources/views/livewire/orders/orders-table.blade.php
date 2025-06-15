@@ -95,7 +95,6 @@
                                 {{ __('admin-panel.view_order') }}
                             </button>
                             <button wire:click="deleteOrder({{ $order->id }})"
-                                onclick="return confirm('Are you sure you want to delete this order?')"
                                 class="text-red-600 hover:underline text-sm">
                                 {{ __('admin-panel.delete_order') }}
                             </button>

@@ -21,6 +21,11 @@ class Menu extends Component
     use WithPagination;
     use WithFileUploads;
     public $perPage = 12;
+    public $selectedPrices = [];
+    public $maxSizeCount = 4;
+    public $sizes = [];
+    public $newSize;
+    public $newPrice;
     public $showImageModal = false;
     public $selectedImage = null;
     public $currentLocale;
@@ -46,6 +51,21 @@ class Menu extends Component
     public $categoryName = '';
     public $categoryOtherName = '';
 
+    public function appendSizePrice()
+    {
+        if ($this->newSize == null || $this->newPrice == null || count($this->sizes) >= $this->maxSizeCount)
+            return;
+        array_push($this->sizes, [
+            'size' => $this->newSize,
+            'price' => $this->newPrice,
+        ]);
+    }
+
+    public function selectSize($productId, $price)
+    {
+        $this->selectedPrices[$productId] = $price;
+   
+    }
     #[On('offerSelected')]
 
     public function getOffer($id)
@@ -77,7 +97,6 @@ class Menu extends Component
                     $query->where('offers.id', $this->selectedOffer);
                 });
             });
-
         return view('livewire.menu', [
             'products' => $query->paginate($this->perPage),
             'categories' => Category::all(),
@@ -164,10 +183,19 @@ class Menu extends Component
         $this->productPrice = $product->price;
         $this->productCategory = $product->category_id;
         $this->productImage = $product->image;
+        $this->tempImageUrl = $product->image;
+        $prices = $product->prices;
+        foreach ($prices as $key => $value) {
+            array_push($this->sizes, [
+                'size' => $value->size,
+                'price' => $value->price,
+            ]);
+        }
     }
 
     public function createProduct()
     {
+
         $rules = $this->validate([
             'productName' => 'required|min:3',
             'productOtherName' => 'required|min:3',
@@ -187,7 +215,7 @@ class Menu extends Component
 
         info($imagePath);
 
-        Product::updateOrCreate([
+        $product =  Product::updateOrCreate([
             'id' => $this->productId,
         ], [
             'name' => $this->productName,
@@ -200,10 +228,24 @@ class Menu extends Component
             'slug' => Str::slug($this->productName),
         ]);
 
+        if ($product) {
+            // Use syncSizePrices instead of loop with addSizePrice
+            $product->syncSizePrices($this->sizes);
+        }
+        $this->sizes = [];
+        $this->reset();
+        $this->dispatch('product-created', __('menu.product_created'));
         $this->closeProductModal();
-        $this->dispatch('product-created');
     }
 
+    public function removeSize($key)
+    {
+        if (isset($this->sizes[$key])) {
+            unset($this->sizes[$key]);
+            // Re-index the array to avoid gaps
+            $this->sizes = array_values($this->sizes);
+        }
+    }
     public function createCategory()
     {
         $this->validate([
@@ -252,6 +294,7 @@ class Menu extends Component
 
     public function mount()
     {
+ 
         $this->currentLocale = App::getLocale();
     }
 

@@ -12,6 +12,7 @@
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    {{-- <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" /> --}}
     @stack('scripts')
     <!-- Styles / Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -63,8 +64,10 @@
     </header>
 
     <main class="w-full lg:max-w-4xl  mx-auto px-6 mt-8">
-        @livewire('dining-choice-modal')
+        {{-- @livewire('dining-choice-modal') --}}
 
+        @livewire('carousel')
+        <br>
         @livewire('menu')
         @livewire('cart')
         @livewire('checkout')
@@ -77,7 +80,18 @@
                         icon: 'success',
                         title: message,
                         showConfirmButton: false,
-                        timer: window.toastTimer || 1500 ,// Default to 1500ms if not configured  
+                        timer: window.toastTimer || 1500, // Default to 1500ms if not configured  
+                        timerProgressBar: true,
+                    });
+                });
+                Livewire.on('product-created', (message) => {
+                    Swal.fire({
+                        toast: true,
+                        position: 'top',
+                        icon: 'success',
+                        title: message,
+                        showConfirmButton: false,
+                        timer: window.toastTimer || 1500, // Default to 1500ms if not configured  
                         timerProgressBar: true,
                     });
                 });
@@ -87,14 +101,14 @@
                         position: 'center',
                         icon: 'success',
                         title: '{{ __('alert.order_placed') }}',
-                        timer: window.toastTimer || 1500 ,// Default to 1500ms if not configured  
+                        timer: window.toastTimer || 1500, // Default to 1500ms if not configured  
                         timerProgressBar: true,
                     });
                 });
             });
         </script>
     </main>
-
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
     @livewireScripts
 </body>
 

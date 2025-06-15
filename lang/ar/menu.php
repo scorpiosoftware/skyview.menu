@@ -30,4 +30,7 @@ return [
     'select_category' => 'اختر فئة',
     'product_other_name' => 'اسم المنتج بالاجنبي',
     'category_other_name' => 'اسم الفئة بالاجنبي',
+    'product_created' => 'تم حفظ المنتج بنجاح',
+    'size' => 'الحجم',
+    'append' => 'اضافة',
 ];

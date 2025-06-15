@@ -40,7 +40,7 @@ class Cart extends Component
     }
 
     #[On('addToCart')]
-    public function addToCart($productId)
+    public function addToCart($productId , $size = null)
     {
         $cartItem = CartModel::where('session_id', $this->sessionId)
             ->where('product_id', $productId)

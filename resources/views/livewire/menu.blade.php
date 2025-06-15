@@ -168,7 +168,7 @@
                                     </svg>
                                 </button>
                             @endif
-                            <img src="{{ $product->image }}" alt="{{ $product->name }}"
+                            <img src="{{ $product->image }}" alt="{{ $product->name }}" lazy
                                 class="w-full h-40 sm:h-48 z-50 object-cover transition-transform duration-500 group-hover:scale-110">
                             <div
                                 class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300">
@@ -177,7 +177,13 @@
                                 <span
                                     class="inline-block bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium shadow-md truncate">
                                     {{ __('cart.currency') }}
-                                    {{ number_format($product->getDiscountedPriceAttribute(), 0) }}
+                                    {{-- {{ number_format($product->getDiscountedPriceAttribute(), 0) }} --}}
+                                    {{-- {{ number_format($product->getDiscountedPriceForSize($selectedPrices[$product->id] ?? $product?->prices[0]?->size)  ?? $product->getDiscountedPriceAttribute(), 0) }} --}}
+                                    @if (isset($selectedPrices[$product->id]))
+                                        {{ $product->getDiscountedPriceForSize($selectedPrices[$product->id]) }}
+                                    @else
+                                        {{ number_format($product->getDiscountedPriceAttribute(), 0) }}
+                                    @endif
                                 </span>
                             </div>
                             <div class="absolute top-3 left-3 max-w-[40%]">
@@ -189,18 +195,12 @@
                             </div>
                         </div>
                         <div class="flex justify-start items-center gap-3 px-4 py-2">
-                            <button
-                                class="w-10 h-10 rounded-full border border-gray-300 bg-white hover:bg-red-500 hover:text-white text-sm font-semibold transition duration-200 shadow-sm">
-                                SM
-                            </button>
-                            <button
-                                class="w-10 h-10 rounded-full border border-gray-300 bg-white hover:bg-red-500 hover:text-white text-sm font-semibold transition duration-200 shadow-sm">
-                                M
-                            </button>
-                            <button
-                                class="w-10 h-10 rounded-full border border-gray-300 bg-white hover:bg-red-500 hover:text-white text-sm font-semibold transition duration-200 shadow-sm">
-                                L
-                            </button>
+                            @foreach ($product->prices as $price)
+                                <button wire:click="selectSize({{ $product->id }}, '{{ $price->size }}')"
+                                    class="w-10 h-10 rounded-full border border-gray-300 bg-white hover:bg-red-500 hover:text-white text-sm font-semibold transition duration-200 shadow-sm">
+                                    {{ $price->size }}
+                                </button>
+                            @endforeach
                         </div>
 
                         <div class="p-4 flex flex-col flex-grow">
@@ -212,7 +212,11 @@
                                 {{ App::getLocale() == 'ar' ? $product->description : $product->other_description }}
                             </p>
                             <div class="mt-auto">
-                                <button wire:click="$dispatch('addToCart', { productId: {{ $product->id }} })"
+                                <button
+                                    wire:click="$dispatch('addToCart', { productId: {{ $product->id }} , size: 
+                                    @if (isset($selectedPrices[$product->id])) {{ $product->getDiscountedPriceForSize($selectedPrices[$product->id]) }}
+                                    @else
+                                    {{ $product->getDiscountedPriceAttribute() }} @endif })"
                                     class="w-full bg-blue-500 text-white py-2.5 px-4 rounded-full hover:bg-blue-600 transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-md active:translate-y-0 font-medium">
                                     {{ __('product.add_to_cart') }}
                                 </button>
@@ -223,9 +227,9 @@
             </div>
 
             {{-- @if ($products->count() > $perPage) --}}
-                <div class="mt-6 !bg-white rounded-lg p-4">
-                    {{ $products->links() }}
-                </div>
+            <div class="mt-6 !bg-white rounded-lg p-4">
+                {{ $products->links() }}
+            </div>
             {{-- @endif --}}
         </div>
 
@@ -297,6 +301,65 @@
                                         <span class="text-red-500 text-sm">{{ $message }}</span>
                                     @enderror
                                 </div>
+                                <div class="flex justify-start items-center w-full space-x-2">
+                                    <div>
+                                        <label for="newSize"
+                                            class="block text-sm font-medium text-gray-700">{{ __('menu.size') }}</label>
+                                        <input type="text" wire:model="newSize" id="newSize"
+                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                        @error('newSize')
+                                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <div>
+                                        <label for="newPrice"
+                                            class="block text-sm font-medium text-gray-700">{{ __('menu.product_price') }}</label>
+                                        <input type="number" wire:model="newPrice" id="newPrice"
+                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                        @error('newPrice')
+                                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+
+                                    <button type="button" wire:click='appendSizePrice'
+                                        class="w-full mt-5 justify-center items-center rounded-md border border-transparent shadow-sm px-4 py-2.5 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
+                                        {{ __('menu.append') }}
+                                    </button>
+
+                                </div>
+
+                                <div>
+                                    <table
+                                        class="min-w-full text-sm text-left  text-gray-700 border rounded-lg shadow-lg">
+                                        <thead class="text-xs uppercase bg-gray-100 text-gray-600">
+                                            <tr>
+                                                <th class="px-4 py-2 whitespace-nowrap cursor-pointer">
+                                                    {{ __('menu.size') }}</th>
+                                                <th class="px-4 py-2 whitespace-nowrap cursor-pointer">
+                                                    {{ __('menu.product_price') }}</th>
+                                                <th>{{ __('admin-panel.actions') }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="max-h-12 overflow-y-scroll ">
+                                            @foreach ($sizes as $key => $size)
+                                                <tr class="border-b hover:bg-gray-50"
+                                                    wire:key="size-{{ $key }}">
+                                                    <td class="px-4 py-2">{{ $size['size'] }}</td>
+                                                    <td class="px-4 py-2">{{ $size['price'] }}</td>
+                                                    <td>
+                                                        <button type="button"
+                                                            wire:click="removeSize({{ $key }})"
+                                                            class="text-red-600 hover:underline text-sm">
+                                                            {{ __('admin-panel.delete') }}
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
                                 <div>
                                     <label for="productOtherName"
                                         class="block text-sm font-medium text-gray-700">{{ __('menu.product_other_name') }}</label>
