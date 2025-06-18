@@ -6,12 +6,11 @@
 
         <div class="flex justify-center space-x-2 w-full">
             <button wire:click='setType(false)'
-                class="flex items-center justify-start space-x-3 px-4 border-2 {{ !$type ? 'border-blue-500 bg-blue-50' : 'border-gray-200' }}  rounded-lg  hover:border-blue-500 hover:bg-blue-50 transition-all group ">{{ __('admin-panel.take_away_orders') }}</button>
-
+                class=" flex items-center justify-start space-x-3 px-4 border-2 border-gray-200 rounded-lg {{ !$type ? 'border-green-500 bg-green-50' : '' }} hover:border-green-500 hover:bg-green-50 transition-all group">{{ __('admin-panel.din_in_orders') }}</button>
             <button wire:click='setType(true)'
-                class=" flex items-center justify-start space-x-3 px-4 border-2 border-gray-200 rounded-lg {{ $type ? 'border-green-500 bg-green-50' : '' }} hover:border-green-500 hover:bg-green-50 transition-all group">{{ __('admin-panel.din_in_orders') }}</button>
-
-        </div>
+                class="flex items-center justify-start space-x-3 px-4 border-2 {{ $type ? 'border-blue-500 bg-blue-50' : 'border-gray-200' }}  rounded-lg  hover:border-blue-500 hover:bg-blue-50 transition-all group ">{{ __('admin-panel.take_away_orders') }}</button>
+      
+            </div>
         <!-- Filters & Export -->
         <div class="flex flex-wrap gap-2 items-center">
             <!-- Status Filter -->
@@ -50,7 +49,7 @@
                             </th>
                         @endforeach
                     @else
-                        @foreach (['id' => __('admin-panel.order_id'), 'name' => __('admin-panel.tables'), 'total' => __('admin-panel.total_amount'), 'created_at' => __('admin-panel.date'), 'status' => __('admin-panel.status')] as $field => $label)
+                        @foreach (['id' => __('admin-panel.order_id'), 'name' => __('admin-panel.tables'),  'total' => __('admin-panel.total_amount'), 'created_at' => __('admin-panel.date'), 'status' => __('admin-panel.status')] as $field => $label)
                             <th class="px-4 py-2 whitespace-nowrap cursor-pointer"
                                 wire:click="sortBy('{{ $field }}')">
                                 {{ $label }}
@@ -67,12 +66,12 @@
                 @foreach ($orders as $order)
                     <tr class="border-b hover:bg-gray-50" wire:key="order-{{ $order->id }}">
                         <td class="px-4 py-2">{{ $order->id }}</td>
-                        @if ($type)
-                            <td class="px-4 py-2">{{ $order->name }}</td>
-                            <td class="px-4 py-2">{{ $order->phone }}</td>
-                            <td class="px-4 py-2">{{ $order->address }}</td>
+                        @if($type)
+                        <td class="px-4 py-2">{{ $order->name }}</td>
+                        <td class="px-4 py-2">{{ $order->phone }}</td>
+                        <td class="px-4 py-2">{{ $order->address }}</td>
                         @else
-                            <td class="px-4 py-2">{{ $order->table }}</td>
+                         <td class="px-4 py-2">{{ $order->table }}</td>
                         @endif
 
                         <td class="px-4 py-2">{{ __('cart.currency') }} {{ number_format($order->total, 2) }}</td>
