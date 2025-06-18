@@ -64,7 +64,6 @@ class Menu extends Component
     public function selectSize($productId, $price)
     {
         $this->selectedPrices[$productId] = $price;
-   
     }
     #[On('offerSelected')]
 
@@ -83,7 +82,8 @@ class Menu extends Component
         $this->categoryOtherName = $category->other_name;
         $this->showCategoryModal = true;
     }
-    public function render()
+
+    public function renderProducts()
     {
         $query = Product::query()
             ->when($this->search, function ($query) {
@@ -97,8 +97,33 @@ class Menu extends Component
                     $query->where('offers.id', $this->selectedOffer);
                 });
             });
+
+        return $query;
+    }
+
+    public function initSize()
+    {
+        $query = $this->renderProducts();
+        $products = $query->paginate($this->perPage);
+        foreach ($products as $product) {
+            if (count($product->prices) <= 0)
+                continue;
+            $firstSize = $product->prices->first()->size;
+            $this->selectSize($product->id, $firstSize);
+        }
+    }
+    public function render()
+    {
+        $query = $this->renderProducts();
+        $products = $query->paginate($this->perPage);
+        // foreach ($products as $product) {
+        //     if (count($product->prices) <= 0)
+        //         continue;
+        //     $firstSize = $product->prices->first()->size;
+        //     $this->selectSize($product->id, $firstSize);
+        // }
         return view('livewire.menu', [
-            'products' => $query->paginate($this->perPage),
+            'products' => $products,
             'categories' => Category::all(),
             'offers' => Offer::current()->get(),
             'isAdmin' => Auth::check() && Auth::user()->isAdmin(),
@@ -294,8 +319,9 @@ class Menu extends Component
 
     public function mount()
     {
- 
+
         $this->currentLocale = App::getLocale();
+        $this->initSize();
     }
 
     public function changeLocale($locale)

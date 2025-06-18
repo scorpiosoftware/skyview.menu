@@ -45,20 +45,11 @@
                                             <div class="ml-4 flex flex-1 flex-col">
                                                 <div>
                                                     <div class="flex justify-between text-base font-medium text-gray-900">
-                                                        <h3>{{ $item['product']['name'] }}</h3>
-                                                        <p class="ml-4">{{ __('cart.currency') }} {{ number_format(\App\Models\Product::find($item['product']['id'])->getDiscountedPriceAttribute() * $item['quantity'], 2) }}</p>
+                                                        <h3>{{ $item['product']['name'] }} {{ $item['size'] }}</h3>
+                                                        <p class="ml-4">{{ __('cart.currency') }} {{ number_format($item['price'] * $item['quantity'], 2) }}</p>
                                                     </div>
-                                                    {{-- <p class="mt-1 text-sm text-gray-500">{{ $item['product']['category']['name'] }}</p> --}}
                                                 </div>
-                                                {{-- <div class="flex flex-1 items-end justify-between text-sm">
-                                                    <div class="flex items-center">
-                                                        <button wire:click="updateQuantity({{ $item['id'] }}, {{ $item['quantity'] - 1 }})" class="text-gray-500 hover:text-gray-700">-</button>
-                                                        <span class="mx-2">{{ $item['quantity'] }}</span>
-                                                        <button wire:click="updateQuantity({{ $item['id'] }}, {{ $item['quantity'] + 1 }})" class="text-gray-500 hover:text-gray-700">+</button>
-                                                    </div>
 
-                                                    <button wire:click="removeFromCart({{ $item['id'] }})" class="font-medium text-red-600 hover:text-red-500">{{ __('cart.remove') }}</button>
-                                                </div> --}}
                                             </div>
                                         </li>
                                     @endforeach

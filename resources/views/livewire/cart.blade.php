@@ -45,8 +45,8 @@
                                             <div class="ml-4 flex flex-1 flex-col">
                                                 <div>
                                                     <div class="flex justify-between text-base font-medium text-gray-900">
-                                                        <h3>{{ $item->product->name }}</h3>
-                                                        <p class="ml-4">{{ __('cart.currency') }} {{ number_format($item->product->getDiscountedPriceAttribute() * $item->quantity, 2) }}</p>
+                                                        <h3>{{ $item->product->name }} {{ $item->size }}</h3>
+                                                        <p class="ml-4">{{ __('cart.currency') }} {{ number_format($item->product->getDiscountedPriceForSize($item->size) * $item->quantity, 2) }}</p>
                                                     </div>
                                                     <p class="mt-1 text-sm text-gray-500">{{ $item->product->category->name }}</p>
                                                 </div>

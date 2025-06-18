@@ -89,7 +89,7 @@ class Checkout extends Component
             ->where('session_id', session()->getId())
             ->get();
         $total = $cartItems->sum(function ($item) {
-            return $item->quantity * $item->product->getDiscountedPriceAttribute();
+            return $item->quantity * $item->product->getDiscountedPriceForSize($item->size);
         });
 
         $order = Order::create([
@@ -119,7 +119,11 @@ class Checkout extends Component
             $message .= "🛒 الطلبات:\n";
             foreach ($order->order as $item) {
                 $product = Product::find($item['product']['id']);
-                $message .= "- {$item['product']['name']} (x{$item['quantity']}) - د.ع" . ($product->getDiscountedPriceAttribute() * $item['quantity']) . "\n";
+                $message .= "- {$item['product']['name']}"
+                    . (!empty($item['size']) ? " - الحجم: {$item['size']}" : "")
+                    . " (x{$item['quantity']}) - د.ع"
+                    . ($product->getDiscountedPriceForSize($item['size']) * $item['quantity'])
+                    . "\n";
             }
             $message .= "💰 المجموع : {$order->total} د.ع\n";
             $message .= "\n";
@@ -138,7 +142,12 @@ class Checkout extends Component
             $message .= "🕒 وقت الطلب : {$order->created_at->format('Y-m-d H:i:s')}\n";
             $message .= "🛒 الطلبات:\n";
             foreach ($order->order as $item) {
-                $message .= "- {$item['product']['name']} (x{$item['quantity']}) - د.ع" . ($item['product']['price'] * $item['quantity']) . "\n";
+                $product = Product::find($item['product']['id']);
+                $message .= "- {$item['product']['name']}"
+                    . (!empty($item['size']) ? " - الحجم: {$item['size']}" : "")
+                    . " (x{$item['quantity']}) - د.ع"
+                    . ($product->getDiscountedPriceForSize($item['size']) * $item['quantity'])
+                    . "\n";
             }
             $message .= "💰 المجموع : {$order->total} د.ع\n";
             $message .= "\n";

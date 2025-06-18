@@ -180,7 +180,7 @@
                                     {{-- {{ number_format($product->getDiscountedPriceAttribute(), 0) }} --}}
                                     {{-- {{ number_format($product->getDiscountedPriceForSize($selectedPrices[$product->id] ?? $product?->prices[0]?->size)  ?? $product->getDiscountedPriceAttribute(), 0) }} --}}
                                     @if (isset($selectedPrices[$product->id]))
-                                        {{ $product->getDiscountedPriceForSize($selectedPrices[$product->id]) }}
+                                        {{ number_format($product->getDiscountedPriceForSize($selectedPrices[$product->id]),0) }}
                                     @else
                                         {{ number_format($product->getDiscountedPriceAttribute(), 0) }}
                                     @endif
@@ -214,9 +214,9 @@
                             <div class="mt-auto">
                                 <button
                                     wire:click="$dispatch('addToCart', { productId: {{ $product->id }} , size: 
-                                    @if (isset($selectedPrices[$product->id])) {{ $product->getDiscountedPriceForSize($selectedPrices[$product->id]) }}
+                                    @if (isset($selectedPrices[$product->id])) `{{ $selectedPrices[$product->id] }}`
                                     @else
-                                    {{ $product->getDiscountedPriceAttribute() }} @endif })"
+                                    {{ 'null' }} @endif })"
                                     class="w-full bg-blue-500 text-white py-2.5 px-4 rounded-full hover:bg-blue-600 transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-md active:translate-y-0 font-medium">
                                     {{ __('product.add_to_cart') }}
                                 </button>

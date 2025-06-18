@@ -4,6 +4,8 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Cart as CartModel;
+use App\Models\Product;
+use App\Models\ProductPrice;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
@@ -35,6 +37,7 @@ class Cart extends Component
     {
         $this->cartItems = CartModel::with('product')
             ->where('session_id', $this->sessionId)
+            ->orderBy('product_id')
             ->get();
         $this->calculateTotal();
     }
@@ -42,9 +45,16 @@ class Cart extends Component
     #[On('addToCart')]
     public function addToCart($productId , $size = null)
     {
+
+        $product = Product::find($productId);
         $cartItem = CartModel::where('session_id', $this->sessionId)
             ->where('product_id', $productId)
+            ->where('size',$size) 
             ->first();
+
+        $size = ProductPrice::where('size',$size)->first();
+
+        $price = $size ? $size?->price : $product->price;
 
         if ($cartItem) {
             $cartItem->increment('quantity');
@@ -52,7 +62,9 @@ class Cart extends Component
             CartModel::create([
                 'session_id' => $this->sessionId,
                 'product_id' => $productId,
-                'quantity' => 1
+                'quantity' => 1,
+                'size' => $size->size ?? null,
+                'price' => $price,
             ]);
         }
         $this->dispatch('cartUpdated', __('alert.cart_item_added'));
@@ -79,7 +91,7 @@ class Cart extends Component
     private function calculateTotal()
     {
         $this->total = $this->cartItems->sum(function ($item) {
-            return $item->quantity * $item->product->getDiscountedPriceAttribute();
+            return $item->quantity * $item->product->getDiscountedPriceForSize($item->size);
         });
     }
 
