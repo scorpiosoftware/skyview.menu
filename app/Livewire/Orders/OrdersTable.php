@@ -12,9 +12,8 @@ use Maatwebsite\Excel\Facades\Excel as FacadesExcel;
 class OrdersTable extends Component
 {
     use WithPagination;
-    // public $orders;
 
-
+    public $type = true;
     public $showOrderDetails = false;
     public $selectedOrderId = null;
     public $search = '';
@@ -55,21 +54,42 @@ class OrdersTable extends Component
         // Order::find($orderId)?->update(['status' => $status]);
     }
 
+    public function setType($type){
+        $this->type = $type;
+    }
+
     public function deleteOrder($orderId)
     {
         Order::find($orderId)?->delete();
     }
+
+    public function getOrders()
+    {
+        //true that mean takeaway orders
+        if ($this->type) {
+            $orders = Order::query()->when($this->statusFilter, fn($q) => $q->where('status', $this->statusFilter))
+                ->where(function ($query) {
+                    $query->where('name', 'like', '%' . $this->search . '%')
+                        ->orWhere('phone', 'like', '%' . $this->search . '%')
+                        ->orWhere('address', 'like', '%' . $this->search . '%');
+                })
+                ->orderBy('id', 'desc')
+                ->paginate(10);
+            return $orders;
+        } else {
+            $orders = Order::query()->when($this->statusFilter, fn($q) => $q->where('status', $this->statusFilter))
+                ->where(function ($query) {
+                    $query->where('table', 'like', '%' . $this->search . '%');
+                })
+                ->whereNotNull('table')
+                ->orderBy('id', 'desc')
+                ->paginate(10);
+            return $orders;
+        }
+    }
     public function render()
     {
-        $orders = Order::query()
-            ->when($this->statusFilter, fn($q) => $q->where('status', $this->statusFilter))
-            ->where(function ($query) {
-                $query->where('name', 'like', '%' . $this->search . '%')
-                    ->orWhere('phone', 'like', '%' . $this->search . '%')
-                    ->orWhere('address', 'like', '%' . $this->search . '%');
-            })
-            ->orderBy('id', 'desc')
-            ->paginate(10);
+        $orders = $this->getOrders();
         return view('livewire.orders.orders-table', compact('orders'));
     }
 }

@@ -65,4 +65,7 @@ return [
     'endDate' => 'تاريخ الانتهاء',
     'edit' => 'تعديل',
     'delete' => 'حذف',
+
+    'din_in_orders' => 'طلب داخلي',
+    'take_away_orders' => 'طلب سفاري',
 ];

@@ -4,6 +4,14 @@
         <input type="text" wire:model.live="search" placeholder="{{ __('admin-panel.search') }}"
             class="border px-4 py-2 rounded w-full sm:w-1/3">
 
+        <div class="flex justify-center space-x-2 w-full">
+            <button wire:click='setType(false)'
+                class="flex items-center justify-start space-x-3 px-4 border-2 {{ !$type ? 'border-blue-500 bg-blue-50' : 'border-gray-200' }}  rounded-lg  hover:border-blue-500 hover:bg-blue-50 transition-all group ">{{ __('admin-panel.take_away_orders') }}</button>
+
+            <button wire:click='setType(true)'
+                class=" flex items-center justify-start space-x-3 px-4 border-2 border-gray-200 rounded-lg {{ $type ? 'border-green-500 bg-green-50' : '' }} hover:border-green-500 hover:bg-green-50 transition-all group">{{ __('admin-panel.din_in_orders') }}</button>
+
+        </div>
         <!-- Filters & Export -->
         <div class="flex flex-wrap gap-2 items-center">
             <!-- Status Filter -->
@@ -31,15 +39,27 @@
         <table class="min-w-full text-sm text-left text-gray-700 border rounded-lg shadow-lg">
             <thead class="text-xs uppercase bg-gray-100 text-gray-600">
                 <tr>
-                    @foreach (['id' => __('admin-panel.order_id'), 'name' => __('admin-panel.customer_name'), 'phone' => __('admin-panel.phone'), 'address' => __('admin-panel.address'), 'total' => __('admin-panel.total_amount'), 'created_at' => __('admin-panel.date'), 'status' => __('admin-panel.status')] as $field => $label)
-                        <th class="px-4 py-2 whitespace-nowrap cursor-pointer"
-                            wire:click="sortBy('{{ $field }}')">
-                            {{ $label }}
-                            @if ($sortField === $field)
-                                <span>{{ $sortDirection === 'asc' ? '▲' : '▼' }}</span>
-                            @endif
-                        </th>
-                    @endforeach
+                    @if ($type)
+                        @foreach (['id' => __('admin-panel.order_id'), 'name' => __('admin-panel.customer_name'), 'phone' => __('admin-panel.phone'), 'address' => __('admin-panel.address'), 'total' => __('admin-panel.total_amount'), 'created_at' => __('admin-panel.date'), 'status' => __('admin-panel.status')] as $field => $label)
+                            <th class="px-4 py-2 whitespace-nowrap cursor-pointer"
+                                wire:click="sortBy('{{ $field }}')">
+                                {{ $label }}
+                                @if ($sortField === $field)
+                                    <span>{{ $sortDirection === 'asc' ? '▲' : '▼' }}</span>
+                                @endif
+                            </th>
+                        @endforeach
+                    @else
+                        @foreach (['id' => __('admin-panel.order_id'), 'name' => __('admin-panel.tables'), 'total' => __('admin-panel.total_amount'), 'created_at' => __('admin-panel.date'), 'status' => __('admin-panel.status')] as $field => $label)
+                            <th class="px-4 py-2 whitespace-nowrap cursor-pointer"
+                                wire:click="sortBy('{{ $field }}')">
+                                {{ $label }}
+                                @if ($sortField === $field)
+                                    <span>{{ $sortDirection === 'asc' ? '▲' : '▼' }}</span>
+                                @endif
+                            </th>
+                        @endforeach
+                    @endif
                     <th class="px-4 py-2 whitespace-nowrap">{{ __('admin-panel.actions') }}</th>
                 </tr>
             </thead>
@@ -47,9 +67,14 @@
                 @foreach ($orders as $order)
                     <tr class="border-b hover:bg-gray-50" wire:key="order-{{ $order->id }}">
                         <td class="px-4 py-2">{{ $order->id }}</td>
-                        <td class="px-4 py-2">{{ $order->name }}</td>
-                        <td class="px-4 py-2">{{ $order->phone }}</td>
-                        <td class="px-4 py-2">{{ $order->address }}</td>
+                        @if ($type)
+                            <td class="px-4 py-2">{{ $order->name }}</td>
+                            <td class="px-4 py-2">{{ $order->phone }}</td>
+                            <td class="px-4 py-2">{{ $order->address }}</td>
+                        @else
+                            <td class="px-4 py-2">{{ $order->table }}</td>
+                        @endif
+
                         <td class="px-4 py-2">{{ __('cart.currency') }} {{ number_format($order->total, 2) }}</td>
                         <td class="px-4 py-2">{{ $order->created_at }}</td>
 

@@ -64,4 +64,7 @@ return [
     'edit' => 'edit',
     'delete' => 'delete',
      
+
+    'din_in_orders' => 'Din In orders',
+    'take_away_orders' => 'Takeaway orders',
 ];

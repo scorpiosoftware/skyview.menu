@@ -93,7 +93,7 @@ class Checkout extends Component
         });
 
         $order = Order::create([
-            'table' => $this->table,
+            'table' => session('site') == 'Dine_In' ? $this->table : null,
             'address' => $this->address,
             'name' => $this->name,
             'phone' => $this->phone,
