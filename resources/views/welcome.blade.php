@@ -64,7 +64,7 @@
     </header>
 
     <main class="w-full lg:max-w-4xl  mx-auto px-6 mt-8">
-        {{-- @livewire('dining-choice-modal') --}}
+        @livewire('dining-choice-modal')
 
         @livewire('carousel')
         <br>
