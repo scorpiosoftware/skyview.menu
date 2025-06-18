@@ -197,7 +197,7 @@
                         <div class="flex justify-start items-center gap-3 px-4 py-2">
                             @foreach ($product->prices as $price)
                                 <button wire:click="selectSize({{ $product->id }}, '{{ $price->size }}')"
-                                    class="w-10 h-10 rounded-full border border-gray-300 bg-white hover:bg-red-500 hover:text-white text-sm font-semibold transition duration-200 shadow-sm">
+                                    class="w-10 h-10 rounded-full border {{ isset($selectedPrices[$product->id]) && $selectedPrices[$product->id]  == $price->size ? 'bg-red-500 text-white' : 'border-gray-300 bg-white'}} hover:bg-red-500 hover:text-white text-xs font-semibold transition duration-200 shadow-sm">
                                     {{ $price->size }}
                                 </button>
                             @endforeach
