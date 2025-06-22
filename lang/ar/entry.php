@@ -2,6 +2,7 @@
 
 return [
         'title' => 'كيف تريد طلبك؟',
+         'title_offer' => 'عروضنا',
         'subtitle' => 'يرجى اختيار خيار التناول المفضل لديك',
         'take_away' => 'طلب خارج المطعم',
         'take_away_description' => '(سفري)',

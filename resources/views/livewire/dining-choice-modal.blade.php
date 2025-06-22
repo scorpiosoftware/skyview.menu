@@ -1,12 +1,4 @@
 <div>
-    {{-- resources/views/livewire/dining-choice-modal.blade.php --}}
-    <!-- Success Message -->
-    {{-- @if (session()->has('message'))
-        <div class="fixed top-4 right-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded z-[9999]">
-            {{ session('message') }}
-        </div>
-    @endif --}}
-
     <!-- Modal Overlay -->
     @if ($showModal)
         <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] p-4">
@@ -65,7 +57,6 @@
                             <p class="text-gray-600 text-center mb-6">{{ __('offer.available_offers') }}</p>
                         @endif
 
-
                         @foreach ($offers as $offer)
                             <button wire:click="selectOffer({{ $offer->id }})"
                                 class="w-full flex items-center justify-start space-x-3 p-4 border-2 border-gray-200 rounded-lg hover:border-green-500 hover:bg-green-50 transition-all group">
@@ -76,14 +67,7 @@
                                 <div class="text-left">
                                     <h3 class="font-semibold text-nowrap text-gray-800 group-hover:text-green-600">
                                         {{ $offer->name }}</h3>
-                                    {{-- <p class="text-sm text-gray-500">{{ __('offer.startDate') }} :
-                                        {{ $offer->start_date->format('Y-m-d') }}</p>
-                                    <p class="text-sm text-gray-500">{{ __('offer.endDate') }} :
-                                        {{ $offer->end_date->format('Y-m-d') }}
-                                    </p> --}}
-
                                     <p>حسم % {{ intval($offer->sale_percentage) }} </p>
-
                                 </div>
                                 <div class="flex justify-end items-center w-1/2" wire:ignore><livewire:countdown-timer
                                         :target-date="$offer->end_date->format('Y-m-d')" /></div>

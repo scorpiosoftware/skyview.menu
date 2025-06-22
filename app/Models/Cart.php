@@ -12,6 +12,7 @@ class Cart extends Model
         'quantity',
         'price',
         'size',
+        'size_en',
         'session_id'
     ];
 

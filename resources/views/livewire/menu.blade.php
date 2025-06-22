@@ -100,7 +100,7 @@
                 </div>
             </div>
             <!-- offers -->
-            @if (count($offers) > 0)
+            {{-- @if (count($offers) > 0)
                 <div class="bg-gray-100 border-t border-gray-200">
                     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
                         <div class="relative">
@@ -127,7 +127,7 @@
                         </div>
                     </div>
                 </div>
-            @endif
+            @endif --}}
 
         </div>
 
@@ -180,7 +180,7 @@
                                     {{-- {{ number_format($product->getDiscountedPriceAttribute(), 0) }} --}}
                                     {{-- {{ number_format($product->getDiscountedPriceForSize($selectedPrices[$product->id] ?? $product?->prices[0]?->size)  ?? $product->getDiscountedPriceAttribute(), 0) }} --}}
                                     @if (isset($selectedPrices[$product->id]))
-                                        {{ number_format($product->getDiscountedPriceForSize($selectedPrices[$product->id]),0) }}
+                                        {{ number_format($product->getDiscountedPriceForSize($selectedPrices[$product->id]), 0) }}
                                     @else
                                         {{ number_format($product->getDiscountedPriceAttribute(), 0) }}
                                     @endif
@@ -197,8 +197,8 @@
                         <div class="flex justify-start items-center gap-3 px-4 py-2">
                             @foreach ($product->prices as $price)
                                 <button wire:click="selectSize({{ $product->id }}, '{{ $price->size }}')"
-                                    class="w-10 h-10 rounded-full border {{ isset($selectedPrices[$product->id]) && $selectedPrices[$product->id]  == $price->size ? 'bg-red-500 text-white' : 'border-gray-300 bg-white'}} hover:bg-red-500 hover:text-white text-xs font-semibold transition duration-200 shadow-sm">
-                                    {{ $price->size }}
+                                    class="px-2 py-0.5 w-auto text-center rounded-full border {{ isset($selectedPrices[$product->id]) && $selectedPrices[$product->id] == $price->size ? 'bg-red-500 text-white' : 'border-gray-300 bg-white' }} hover:bg-red-500 hover:text-white text-xs font-semibold transition duration-200 shadow-sm">
+                                  {{ App::getLocale() == 'ar' ? $price->size : $price->size_en }}
                                 </button>
                             @endforeach
                         </div>
@@ -312,6 +312,15 @@
                                         @enderror
                                     </div>
                                     <div>
+                                        <label for="newSize_en"
+                                            class="block text-sm font-medium text-gray-700">{{ __('menu.size_en') }}</label>
+                                        <input type="text" wire:model="newSize_en" id="newSize_en"
+                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                        @error('newSize_en')
+                                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <div>
                                         <label for="newPrice"
                                             class="block text-sm font-medium text-gray-700">{{ __('menu.product_price') }}</label>
                                         <input type="number" wire:model="newPrice" id="newPrice"
@@ -336,6 +345,8 @@
                                                 <th class="px-4 py-2 whitespace-nowrap cursor-pointer">
                                                     {{ __('menu.size') }}</th>
                                                 <th class="px-4 py-2 whitespace-nowrap cursor-pointer">
+                                                    {{ __('menu.size_en') }}</th>
+                                                <th class="px-4 py-2 whitespace-nowrap cursor-pointer">
                                                     {{ __('menu.product_price') }}</th>
                                                 <th>{{ __('admin-panel.actions') }}</th>
                                             </tr>
@@ -344,7 +355,8 @@
                                             @foreach ($sizes as $key => $size)
                                                 <tr class="border-b hover:bg-gray-50"
                                                     wire:key="size-{{ $key }}">
-                                                    <td class="px-4 py-2">{{ $size['size'] }}</td>
+                                                    <td class="px-4 py-2">{{ isset($size['size']) ? $size['size'] : null }}</td>
+                                                    <td class="px-4 py-2">{{ isset($size['size_en']) ? $size['size_en'] : null}}</td>
                                                     <td class="px-4 py-2">{{ $size['price'] }}</td>
                                                     <td>
                                                         <button type="button"

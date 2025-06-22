@@ -50,10 +50,10 @@ class DiningChoiceModal extends Component
     }
     public function selectOffer($id)
     {
-        if (session()->has('offer')) {
-            session()->forget('offer');
-        }
-        $this->selectedOffer = $id;
+        // if (session()->has('offer')) {
+        //     session()->forget('offer');
+        // }
+        // $this->selectedOffer = $id;
 
         // Emit event to parent component or handle logic here
         $this->dispatch('offerSelected', $id);
@@ -62,8 +62,8 @@ class DiningChoiceModal extends Component
         // $this->showModal = false;
 
         // Optional: Show success message
-        session()->flash('message', "You selected: {$id}");
-        session()->put('offer', $id);
+        // session()->flash('message', "You selected: {$id}");
+        // session()->put('offer', $id);
     }
     public function render()
     {

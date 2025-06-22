@@ -13,6 +13,7 @@ class ProductPrice extends Model
     protected $fillable = [
         'product_id',
         'size',
+        'size_en', // Added for English size representation
         'price',
         'is_active',
     ];

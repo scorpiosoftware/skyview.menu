@@ -32,5 +32,6 @@ return [
     'category_other_name' => 'اسم الفئة بالاجنبي',
     'product_created' => 'تم حفظ المنتج بنجاح',
     'size' => 'الحجم',
+    'size_en' => 'الحجم بالاجنبي',
     'append' => 'اضافة',
 ];

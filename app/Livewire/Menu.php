@@ -25,6 +25,7 @@ class Menu extends Component
     public $maxSizeCount = 4;
     public $sizes = [];
     public $newSize;
+    public $newSize_en;
     public $newPrice;
     public $showImageModal = false;
     public $selectedImage = null;
@@ -53,10 +54,11 @@ class Menu extends Component
 
     public function appendSizePrice()
     {
-        if ($this->newSize == null || $this->newPrice == null || count($this->sizes) >= $this->maxSizeCount)
+        if ($this->newSize == null || $this->newSize_en == null  || $this->newPrice == null || count($this->sizes) >= $this->maxSizeCount)
             return;
         array_push($this->sizes, [
             'size' => $this->newSize,
+            'size_en' => $this->newSize_en,
             'price' => $this->newPrice,
         ]);
     }
@@ -70,7 +72,7 @@ class Menu extends Component
     public function getOffer($id)
     {
 
-        $this->selectedOffer = $id;
+        // $this->selectedOffer = $id;
     }
 
     public function editCategory($id = 0)
@@ -116,12 +118,6 @@ class Menu extends Component
     {
         $query = $this->renderProducts();
         $products = $query->paginate($this->perPage);
-        // foreach ($products as $product) {
-        //     if (count($product->prices) <= 0)
-        //         continue;
-        //     $firstSize = $product->prices->first()->size;
-        //     $this->selectSize($product->id, $firstSize);
-        // }
         return view('livewire.menu', [
             'products' => $products,
             'categories' => Category::all(),
@@ -213,6 +209,7 @@ class Menu extends Component
         foreach ($prices as $key => $value) {
             array_push($this->sizes, [
                 'size' => $value->size,
+                'size_en' => $value->size_en,
                 'price' => $value->price,
             ]);
         }
@@ -232,7 +229,6 @@ class Menu extends Component
         if ($this->productId === null) {
             $rules['productImage'] = 'required|image|max:1024';
         }
-        info($this->productImage);
         $imagePath = null;
         if ($this->productImage instanceof TemporaryUploadedFile) {
             $imagePath = $this->productImage->store('products', 'public');
@@ -257,6 +253,7 @@ class Menu extends Component
             // Use syncSizePrices instead of loop with addSizePrice
             $product->syncSizePrices($this->sizes);
         }
+        
         $this->sizes = [];
         $this->reset();
         $this->dispatch('product-created', __('menu.product_created'));

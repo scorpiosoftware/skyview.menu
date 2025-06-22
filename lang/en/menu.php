@@ -28,6 +28,7 @@ return [
     'product_other_name' => 'Product English Name',
     'category_other_name' => 'Category English Name',
     'product_created' => 'Product Saved Successfully',
-    'size' => 'size',
+    'size' => 'Size (Arabic)',
+    'size_en' => 'Size (English)',
     'append' => 'append',
 ];

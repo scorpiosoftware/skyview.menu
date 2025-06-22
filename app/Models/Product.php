@@ -131,11 +131,11 @@ class Product extends Model
         return $this->activePrices()->pluck('price', 'size')->toArray();
     }
 
-    public function addSizePrice(string $size, float $price): ProductPrice
+    public function addSizePrice(string $size,string $size_en, float $price): ProductPrice
     {
         return $this->prices()->updateOrCreate(
             ['size' => $size],
-            ['price' => $price, 'is_active' => true]
+            ['size_en' => $size_en, 'price' => $price, 'is_active' => true],
         );
     }
 
@@ -148,7 +148,6 @@ class Product extends Model
     {
         // Get current sizes from the database
         $currentSizes = $this->prices()->pluck('size')->toArray();
-        info($currentSizes);
         // Get new sizes from the input
         $newSizes = array_column($sizePrices, 'size');
         info($newSizes);
@@ -163,7 +162,7 @@ class Product extends Model
         // Add or update sizes
         foreach ($sizePrices as $sizePrice) {
             if (!empty($sizePrice['size']) && isset($sizePrice['price'])) {
-                $this->addSizePrice($sizePrice['size'], $sizePrice['price']);
+                $this->addSizePrice($sizePrice['size'],$sizePrice['size_en'], $sizePrice['price']);
             }
         }
     }

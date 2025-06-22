@@ -64,6 +64,7 @@ class Cart extends Component
                 'product_id' => $productId,
                 'quantity' => 1,
                 'size' => $size->size ?? null,
+                'size_en' => $size->size_en ?? null,
                 'price' => $price,
             ]);
         }
