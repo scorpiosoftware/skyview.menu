@@ -14,10 +14,11 @@
                         </svg>
                     </button>
                 </div>
+
             <div id="default-carousel" class="p-6 space-y-4" data-carousel="slide">
                 @if (count($offers) > 0)
                     <!-- Carousel wrapper -->
-                    <div class="relative -top-20 md:top-0 h-96 overflow-hidden max-w-xl mx-auto rounded-lg md:min-h-96">
+                    <div class="relative  h-96 overflow-hidden max-w-xl mx-auto rounded-lg md:min-h-96">
                         @foreach ($offers as $offer)
                             <!-- offer -->
                             <div class=" duration-700 ease-in-out " data-carousel-item
@@ -57,9 +58,6 @@
                 @endif
             </div>
             </div>
-
-
-
         </div>
 
 
