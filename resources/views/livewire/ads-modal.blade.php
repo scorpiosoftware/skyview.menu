@@ -1,5 +1,5 @@
 <div>
-    @if ($showModal)
+    @if ($showModal && count($records) > 1)
         <!-- Modal Backdrop -->
         <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] p-4">
             <!-- Modal Container -->
