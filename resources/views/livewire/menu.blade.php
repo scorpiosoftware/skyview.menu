@@ -82,25 +82,43 @@
                         <div
                             class="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-gray-100 to-transparent z-10 pointer-events-none">
                         </div>
-                        <div x-data="{}" x-init="Sortable.create($refs.sortable, {
-                            onEnd: async (event) => {
-                                let ids = [...$refs.sortable.children].map(el => el.dataset.id);
-                                @this.call('updateSortOrder', ids);
-                            }
-                        })" x-ref="sortable"
-                            class="flex space-x-2 sm:space-x-4 overflow-x-auto custom-scrollbar pb-2">
-                            <button  wire:click="clearCategory"
-                                class="flex-shrink-0 px-3 sm:px-4 py-2 rounded-full text-sm sm:text-base whitespace-nowrap {{ !$selectedCategory ? 'bg-blue-500 text-white' : 'bg-white text-gray-700' }} hover:bg-blue-600 hover:text-white transition-colors">
-                                {{ __('menu.all') }}
-                            </button>
-                            @foreach ($categories as $category)
-                                <button data-id="{{ $category->id }}" wire:click="selectCategory({{ $category->id }})"
-                                    wire:key="category-{{ $category->id }}"
-                                    class="flex-shrink-0 px-3 sm:px-4 py-2 rounded-full text-sm sm:text-base whitespace-nowrap {{ $selectedCategory == $category->id ? 'bg-blue-500 text-white' : 'bg-white text-gray-700' }} hover:bg-blue-600 hover:text-white transition-colors">
-                                    {{ App::getLocale() == 'ar' ? $category->name : $category->other_name }}
+                        @if ($isAdmin)
+                            <div x-data="{}" x-init="Sortable.create($refs.sortable, {
+                                onEnd: async (event) => {
+                                    let ids = [...$refs.sortable.children].map(el => el.dataset.id);
+                                    @this.call('updateSortOrder', ids);
+                                }
+                            })" x-ref="sortable"
+                                class="flex space-x-2 sm:space-x-4 overflow-x-auto custom-scrollbar pb-2">
+                                <button wire:click="clearCategory"
+                                    class="flex-shrink-0 px-3 sm:px-4 py-2 rounded-full text-sm sm:text-base whitespace-nowrap {{ !$selectedCategory ? 'bg-blue-500 text-white' : 'bg-white text-gray-700' }} hover:bg-blue-600 hover:text-white transition-colors">
+                                    {{ __('menu.all') }}
                                 </button>
-                            @endforeach
-                        </div>
+                                @foreach ($categories as $category)
+                                    <button data-id="{{ $category->id }}"
+                                        wire:click="selectCategory({{ $category->id }})"
+                                        wire:key="category-{{ $category->id }}"
+                                        class="flex-shrink-0 px-3 sm:px-4 py-2 rounded-full text-sm sm:text-base whitespace-nowrap {{ $selectedCategory == $category->id ? 'bg-blue-500 text-white' : 'bg-white text-gray-700' }} hover:bg-blue-600 hover:text-white transition-colors">
+                                        {{ App::getLocale() == 'ar' ? $category->name : $category->other_name }}
+                                    </button>
+                                @endforeach
+                            </div>
+                        @else
+                            <div class="flex space-x-2 sm:space-x-4 overflow-x-auto custom-scrollbar pb-2">
+                                <button wire:click="clearCategory"
+                                    class="flex-shrink-0 px-3 sm:px-4 py-2 rounded-full text-sm sm:text-base whitespace-nowrap {{ !$selectedCategory ? 'bg-blue-500 text-white' : 'bg-white text-gray-700' }} hover:bg-blue-600 hover:text-white transition-colors">
+                                    {{ __('menu.all') }}
+                                </button>
+                                @foreach ($categories as $category)
+                                    <button wire:click="selectCategory({{ $category->id }})"
+                                        wire:key="category-{{ $category->id }}"
+                                        class="flex-shrink-0 px-3 sm:px-4 py-2 rounded-full text-sm sm:text-base whitespace-nowrap {{ $selectedCategory == $category->id ? 'bg-blue-500 text-white' : 'bg-white text-gray-700' }} hover:bg-blue-600 hover:text-white transition-colors">
+                                        {{ App::getLocale() == 'ar' ? $category->name : $category->other_name }}
+                                    </button>
+                                @endforeach
+                            </div>
+                        @endif
+
 
                     </div>
                 </div>

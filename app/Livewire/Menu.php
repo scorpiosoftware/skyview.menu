@@ -129,6 +129,7 @@ class Menu extends Component
 
     public function updateSortOrder($orderedIds)
     {
+        
         foreach ($orderedIds as $index => $id) {
             Category::where('id', $id)->update(['sort_order' => $index + 1]);
         }
