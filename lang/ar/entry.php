@@ -9,5 +9,6 @@ return [
         'dine_in' => 'التناول في المطعم',    
         'dine_in_description' => 'استمتع بوجبتك في مطعمنا',
         'cancel' => 'إلغاء',
+        'title_ads' => 'خبر عاجل !',
 ];
 

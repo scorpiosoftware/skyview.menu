@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Livewire\AdsManager;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Menu;
 use App\Http\Middleware\AdminMiddleware;
@@ -24,6 +25,9 @@ Route::middleware(['auth', 'verified'])->prefix('dashboard')->group(function () 
     Route::get('/offers', function () {
         return view('dashboard.offers.index');
     })->name('offer');
+    Route::get('/ads', function (){
+        return view('dashboard.ads.index');
+    })->name('ads.index');
 });
 
 Route::middleware('auth')->group(function () {

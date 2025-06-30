@@ -67,6 +67,7 @@
         @livewire('dining-choice-modal')
 
         @livewire('carousel')
+        @livewire('ads-modal')
         <br>
         @livewire('menu')
         @livewire('cart')

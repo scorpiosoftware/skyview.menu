@@ -9,5 +9,7 @@ return [
     'dine_in' => 'Dine In',    
     'dine_in_description' => 'Enjoy your meal at our restaurant',
     'cancel' => 'Cancel',
+
+    'title_ads' => 'News !',
 ];
 

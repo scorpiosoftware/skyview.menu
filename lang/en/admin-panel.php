@@ -63,8 +63,18 @@ return [
     'endDate' => 'end date',
     'edit' => 'edit',
     'delete' => 'delete',
-     
+
 
     'din_in_orders' => 'Din In orders',
     'take_away_orders' => 'Takeaway orders',
+
+    'ads' => 'Ads',
+    'ads_desc' => 'Ads Manager',
+    'add_ad' => 'Add new Ad',
+    'add_images' => 'Add images',
+    'disable' =>  'Disable',
+    'enable' => 'Enable',
+    'all_ads' => 'All Ads',
+    'active_ads' => 'Active Only',
+    'disabled_ads' => 'Inactive Only',
 ];
