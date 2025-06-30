@@ -1,5 +1,5 @@
 <div>
-    @if ($showModal && count($records) > 1)
+    @if ($showModal && count($records) > 0 )
         <!-- Modal Backdrop -->
         <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] p-4">
             <!-- Modal Container -->
@@ -10,7 +10,7 @@
                         {{ $title }}
                     </h2>
                     <div class="flex items-center space-x-4">
-                        @if(count($records) > 1)
+                        @if(count($records) > 0)
                             <button wire:click="toggleAutoSwap" 
                                     class="text-gray-400 hover:text-gray-600 transition-colors"
                                     title="{{ $autoSwap ? 'Pause slideshow' : 'Play slideshow' }}">
@@ -49,7 +49,7 @@
                             </div>
 
                             <!-- Navigation Buttons -->
-                            @if(count($records) > 1)
+                            @if(count($records) > 0)
                                 <button type="button"
                                     class="absolute top-1/2 left-4 z-30 flex items-center justify-center w-10 h-10 bg-white/30 rounded-full hover:bg-white/50 focus:outline-none transition-colors"
                                     wire:click="prevImage">
@@ -73,7 +73,7 @@
                             @endif
 
                             <!-- Indicators -->
-                            @if(count($records) > 1)
+                            @if(count($records) > 0)
                                 <div class="absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
                                     @foreach ($records as $index => $record)
                                         <button type="button"
