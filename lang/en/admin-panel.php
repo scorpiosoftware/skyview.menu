@@ -77,4 +77,6 @@ return [
     'all_ads' => 'All Ads',
     'active_ads' => 'Active Only',
     'disabled_ads' => 'Inactive Only',
+
+    'no_ads' => 'No ads found. Create your first ad!',
 ];

@@ -80,7 +80,7 @@
             </div>
         @empty
             <div class="col-span-full text-center py-8">
-                <p class="text-gray-500">No ads found. Create your first ad!</p>
+                <p class="text-gray-500">{{ __('admin-panel.no_ads') }}</p>
             </div>
         @endforelse
     </div>
