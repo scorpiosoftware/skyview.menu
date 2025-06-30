@@ -118,12 +118,20 @@ class Menu extends Component
     {
         $query = $this->renderProducts();
         $products = $query->paginate($this->perPage);
+        $categories = Category::orderBy('sort_order')->get();
         return view('livewire.menu', [
             'products' => $products,
-            'categories' => Category::all(),
+            'categories' => $categories,
             'offers' => Offer::current()->get(),
             'isAdmin' => Auth::check() && Auth::user()->isAdmin(),
         ]);
+    }
+
+    public function updateSortOrder($orderedIds)
+    {
+        foreach ($orderedIds as $index => $id) {
+            Category::where('id', $id)->update(['sort_order' => $index + 1]);
+        }
     }
 
     public function selectCategory($categoryId)
@@ -253,7 +261,7 @@ class Menu extends Component
             // Use syncSizePrices instead of loop with addSizePrice
             $product->syncSizePrices($this->sizes);
         }
-        
+
         $this->sizes = [];
         $this->reset();
         $this->dispatch('product-created', __('menu.product_created'));
