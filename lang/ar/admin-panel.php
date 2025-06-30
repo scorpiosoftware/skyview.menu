@@ -81,4 +81,7 @@ return [
     'active_ads' => 'الاعلانات المفعلة',
     'disabled_ads' => 'الاعلانات المعطلة',
     'no_ads' => 'لا يوجد اعلانات !',
+
+      'ads_enabled' => 'Ad enabled successfully!',
+    'ads_disabled' => 'Ad disabled successfully!',
 ];

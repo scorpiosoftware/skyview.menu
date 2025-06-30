@@ -79,4 +79,8 @@ return [
     'disabled_ads' => 'Inactive Only',
 
     'no_ads' => 'No ads found. Create your first ad!',
+
+    'ads_enabled' => 'Ad enabled successfully!',
+    'ads_disabled' => 'Ad disabled successfully!,
+'
 ];

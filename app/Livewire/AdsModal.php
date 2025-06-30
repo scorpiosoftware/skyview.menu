@@ -11,6 +11,7 @@ class AdsModal extends Component
     public $showModal = true;
     public $currentIndex = 0;
     public $records = [];
+    public $title = "";
     public $autoSwap = true;
     public $swapInterval = 2000; // 5 seconds
     public $swapTimer = null;
@@ -18,6 +19,7 @@ class AdsModal extends Component
     public function mount()
     {
         $ads = AdsModel::where('is_active',true)->first();
+        $this->title = $ads->title ?? "";
         $this->records = $ads->images ?? [];
     }
 

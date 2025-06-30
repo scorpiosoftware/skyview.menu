@@ -7,7 +7,7 @@
                 <!-- Header -->
                 <div class="flex items-center justify-between p-4 md:p-6 border-b border-gray-200">
                     <h2 class="text-xl font-semibold text-gray-800">
-                        {{ __('entry.title_ads') }}
+                        {{ $title }}
                     </h2>
                     <div class="flex items-center space-x-4">
                         @if(count($records) > 1)

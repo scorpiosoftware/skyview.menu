@@ -18,6 +18,7 @@ class AdsManager extends Component
 
     public $images = [];
 
+    public $title = "";
     public function mount()
     {
         $this->loadAds();
@@ -50,8 +51,13 @@ class AdsManager extends Component
 
     public function openModal($adId = null)
     {
-        $this->reset(['images']);
+        $this->reset(['images', 'title']);
         $this->editingAd = $adId;
+        if ($this->editingAd) {
+            $ad = AdsModel::find($this->editingAd);
+            $this->title = $ad->title;
+            // $this->images = $ad->images ?? [];
+        }
         $this->showModal = true;
     }
 
@@ -82,13 +88,15 @@ class AdsManager extends Component
             $ad = AdsModel::find($this->editingAd);
             $existingImages = $ad->images ?? [];
             $ad->update([
-                'images' => array_merge($existingImages, $imageUrls)
+                'images' => array_merge($existingImages, $imageUrls),
+                'title' => $this->title,
             ]);
         } else {
             // Create new ad
             AdsModel::create([
                 'images' => $imageUrls,
                 'is_active' => true,
+                'title' => $this->title,
             ]);
         }
 
