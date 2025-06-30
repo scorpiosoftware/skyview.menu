@@ -87,7 +87,7 @@
                         </div>
                     @else
                         <div class="p-6 text-center text-gray-500">
-                            No images available
+                           {{ __('admin-panel.no_ads') }}
                         </div>
                     @endif
                 </div>
