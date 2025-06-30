@@ -118,8 +118,8 @@
         </div>
 
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('offer')" :active="request()->routeIs('offer')">
-                {{ __('admin-panel.offers') }}
+            <x-responsive-nav-link :href="route('ads.index')" :active="request()->routeIs('ads.index')">
+              {{ __('admin-panel.ads') }}
             </x-responsive-nav-link>
         </div>
 
