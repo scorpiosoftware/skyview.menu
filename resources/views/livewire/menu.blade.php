@@ -251,9 +251,9 @@
             </div>
 
             {{-- @if ($products->count() > $perPage) --}}
-            <div class="mt-6 !bg-white rounded-lg p-4">
+            {{-- <div class="mt-6 !bg-white rounded-lg p-4">
                 {{ $products->links() }}
-            </div>
+            </div> --}}
             {{-- @endif --}}
         </div>
 

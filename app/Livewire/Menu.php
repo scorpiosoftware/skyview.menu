@@ -20,7 +20,7 @@ class Menu extends Component
 {
     use WithPagination;
     use WithFileUploads;
-    public $perPage = 12;
+    public $perPage = 1000;
     public $selectedPrices = [];
     public $maxSizeCount = 4;
     public $sizes = [];
