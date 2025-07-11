@@ -192,7 +192,7 @@
                                     </svg>
                                 </button>
                             @endif
-                            <img src="{{ $product->image }}" alt="{{ $product->name }}" lazy
+                            <img src="{{ $product->image }}" alt="{{ $product->name }}" loading="lazy"
                                 class="w-full h-40 sm:h-48 z-50 object-cover transition-transform duration-500 group-hover:scale-110">
                             <div
                                 class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300">
